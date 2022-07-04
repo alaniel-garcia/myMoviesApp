@@ -1,7 +1,22 @@
-@import './normalize.css';
-@import './App.scss';
-$font-stack: 'DM Sans', sans-serif;
-$font-size: 62.5%;
+@use './normalize.scss';
+
+
+
+/* Font-styles */
+  $font-stack: 'DM Sans', sans-serif;
+  $font-size: 62.5%;
+
+
+
+
+/* Color-styles */
+  $main-bg: #171717;
+  $secondary-grey: #444444;
+  $secondary-red: #DA0037;
+  $just-white: #FFFFFF;
+
+
+
 
 html {
   font-size: $font-size;
@@ -24,3 +39,4 @@ h2 {
   font-size: 1.4rem;
     line-height: 1.8rem;
 }
+

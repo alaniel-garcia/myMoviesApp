@@ -1,0 +1,18 @@
+@use './Card.scss' as card;
+
+.Carousel {
+  margin-block: 2.4rem;
+}
+
+.cards-container {
+  display: flex;
+    gap: 1.2rem;
+  overflow-x: scroll;
+  overflow-y: visible;
+}
+
+.cards-container--grid {
+  display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(card.$card-width--poster, 1fr));
+    gap: 1.2rem;
+}

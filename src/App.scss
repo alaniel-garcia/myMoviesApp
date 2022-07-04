@@ -1,13 +1,52 @@
-/* Color-styles */
-  $main-bg: #171717;
-  $secondary-grey: #444444;
-  $secondary-red: #DA0037;
-  $just-white: #FFFFFF;
-
-
+@use './index.scss' as idx;
+@use './Components/Miscellaneous/HamburguerMenu.scss' as hb;
 
 
 /* Icons design */
 .material-symbols-outlined {
-  color: $secondary-red;   
+  color: idx.$secondary-red;   
 }
+//
+
+.App {
+  
+  padding-inline: 2.4rem;
+}
+
+.App-nav {
+  display: flex;
+    justify-content: space-between;
+
+    margin-block-start: 2.4rem;
+    height: hb.$size;
+
+  .searchbar {
+    display: flex;
+
+    padding-inline: .8rem;
+      height: 100%;
+
+    background: idx.$secondary-grey;
+      border-radius: .4rem;
+
+    .material-symbols-outlined {
+      align-self: center;
+      cursor: pointer;
+    }
+  }
+
+  .HamburguerMenu {
+  }
+
+}
+
+.searchbar_text-field {
+  background: transparent;
+    border: none;
+    color: idx.$just-white;
+
+  &:focus {
+    outline: none;
+  }
+}
+

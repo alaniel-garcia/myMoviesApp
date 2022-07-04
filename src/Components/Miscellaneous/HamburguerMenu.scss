@@ -1,18 +1,23 @@
-@import '../../App.scss';
 @use 'sass:math';
+@use '../../index.scss' as idx;
 $size: 3.5rem;
 
 .HamburguerMenu {
+  display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
   width: $size;
     height: $size;
-  border: 1px solid $secondary-red;
 
   &:hover{
     cursor: pointer;
   }
 
   .HamburguerMenu-bar {
-    background: $secondary-red;
-    height: math.div( 6rem, 2rem);
+    background: idx.$secondary-red;
+    height: math.div( $size, 5);
+    width: 100%;
+    
   }
 }
