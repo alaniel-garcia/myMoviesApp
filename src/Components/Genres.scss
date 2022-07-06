@@ -1,0 +1,9 @@
+.Genres__container {
+  display: flex;
+    column-gap: 1.4rem;
+
+  margin-block: 2.4rem;
+  height: 4rem;
+
+  overflow-x: scroll;
+}

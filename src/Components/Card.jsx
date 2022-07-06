@@ -1,5 +1,6 @@
 import './Card.scss';
 import arrow from '../Assets/icons/arrow.svg';
+import Button from './Miscellaneous/Button';
 
 const API_URL_IMG_LARGE = 'https://image.tmdb.org/t/p/w500';
 
@@ -21,13 +22,11 @@ export default function Card(props) {
           <span>{props.release.slice(0,4)}</span>
         </div>
         <div className='details__button'>
-          <p className='button-text'>
-	    Details
-	  </p>
-	  <img 
-            className='button-arrow'
+          <Button 
+            text='Details'
+            icon={true}
             src={arrow}
-            alt=""
+            rotate={'-90deg'}
           />
         </div>
       </div>

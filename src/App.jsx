@@ -44,6 +44,7 @@ function App() {
         <Genres 
           API_URL={API_URL} 
           API_KEY={API_KEY} 
+          section='Genres'
         />
         <Carousel
           API_URL={API_URL} 

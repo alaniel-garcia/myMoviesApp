@@ -126,34 +126,7 @@ $card-width--hover: 1.6rem;
 .details__button {
   position: absolute;
     bottom: .8rem;
-    display: flex;
 
-  padding-inline: .8rem;
-    padding-block: .4rem;
-
-  background: idx.$secondary-grey;
-    border-radius: .4rem;
-
-  .button-text {
-    font-size: 1.2rem;
-      letter-spacing: .025rem;
-
-    user-select: none;
-  }
-
-  &:hover {
-    background: rgba(45,45,45,.7);
-    cursor: pointer;
-  }
-}
-
-.button-arrow {
-  
-  margin-inline-start: .4rem;
-  width: 1rem;
-
-  filter: invert(1);
-    transform: rotate(-90deg);
 }
 
 .card__movie-img--large{
