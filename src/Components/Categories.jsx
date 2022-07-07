@@ -1,4 +1,4 @@
-import './Genres.scss';
+import './Categories.scss';
 import { useEffect, useState } from 'react';
 import Carousel from './Carousel';
 import Button from './Miscellaneous/Button';
@@ -7,9 +7,8 @@ export default function Genres(props){
   const [genres,setGenres] = useState({}); 
 
   async function getGenres(){
-    const res = await fetch(`${props.API_URL}/genre/movie/list?api_key=${props.API_KEY}`);
+    const {data, status} = await props.API(`${props.endpoint}`);
 
-    const data = await res.json();
     data.genres.map(genre => {
       setGenres(
 	(prevState) => {
@@ -17,6 +16,10 @@ export default function Genres(props){
 	}
       )
     })
+
+    if(status !== 200){
+      console.log(`Algo ocurrió: ${status}, ${data.message}`)
+    }
   }
 
   useEffect(()=>{

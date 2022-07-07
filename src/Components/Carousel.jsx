@@ -9,31 +9,18 @@ export default function Carousel(props) {
 
 
   async function getMovies(){
-    const res = await fetch(`${props.API_URL}${props.endpoint}?api_key=${props.API_KEY}`)/*{
-      headers: {
-	'Content-Type': 'application/json',
-	'api_key': props.API_KEY,
-      }
-    })*/
+    const {data, status} = await props.API(`${props.endpoint}`)
 
-    const data = await res.json();
-     setMovies(data.results)
+    setMovies(data.results)
 
-    if(res.status !== 200){
-      console.log(`Algo ocurrió. Estado: ${res.status}. Mensaje: ${data.message}`)
-    }
-    else{
-      console.log(movies)
+    if(status !== 200){
+      console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
     }
   }
 
   useEffect(() =>{
     getMovies()
   },[]);
-
-  useEffect(() => {
-    console.log(movies)
-  },[movies]);
 
 
   return(

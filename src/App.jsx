@@ -1,13 +1,10 @@
-import API_KEY from './KEY';
-import HamburguerMenu from './Components/Miscellaneous/HamburguerMenu';
+
+import API, {API_EP_TRENDING, API_EP_DISCOVER, API_EP_GENRES} from './Api/API';
 import './App.scss';
 import Carousel from './Components/Carousel';
-import Genres from './Components/Genres';
+import Categories from './Components/Categories';
+import HamburguerMenu from './Components/Miscellaneous/HamburguerMenu';
 
-
-const API_URL = "https://api.themoviedb.org/3";
-const API_EP_TRENDING = '/trending/movie/day';
-const API_EP_DISCOVER = '/discover/movie';
 const lang = 'en';
 
 function App() {
@@ -26,29 +23,26 @@ function App() {
       </header>
       <main>
         <Carousel 
-          API_URL={API_URL} 
-          API_KEY={API_KEY} 
+          API={API} 
           endpoint={API_EP_TRENDING}
           width={'large'} 
           section='Trending' 
           language={lang}
         />
         <Carousel
-          API_URL={API_URL} 
-          API_KEY={API_KEY} 
+          API ={API}
           endpoint={API_EP_DISCOVER}
           width={'poster'} 
           section='Discover' 
           language={lang}
         />
-        <Genres 
-          API_URL={API_URL} 
-          API_KEY={API_KEY} 
-          section='Genres'
+        <Categories 
+          API ={API}
+          endpoint={API_EP_GENRES}
+          section='Categories'
         />
         <Carousel
-          API_URL={API_URL} 
-          API_KEY={API_KEY} 
+          API ={API}
           endpoint={API_EP_DISCOVER}
           extraParams={'&page=1'}
           width={'poster'} 

@@ -1,0 +1,24 @@
+import axios from 'axios';
+import API_KEY from './KEY';
+
+const API = axios.create({
+  baseURL: 'https://api.themoviedb.org/3',
+  headers:{
+    'Content-Type': 'application/json;charset=utf-8',
+  },
+  params: {
+    'api_key': API_KEY,
+  },
+});
+
+const API_EP_TRENDING = '/trending/movie/day';
+const API_EP_DISCOVER = '/discover/movie';
+const API_EP_GENRES = '/genre/movie/list';
+
+export default API;
+
+export {
+  API_EP_TRENDING,
+  API_EP_DISCOVER,
+  API_EP_GENRES
+}
