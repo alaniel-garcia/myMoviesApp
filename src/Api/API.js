@@ -18,6 +18,7 @@ const API_EP_GENRES = '/genre/movie/list';
 export default API;
 
 export {
+  API,
   API_EP_TRENDING,
   API_EP_DISCOVER,
   API_EP_GENRES

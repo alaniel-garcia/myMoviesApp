@@ -4,6 +4,14 @@
   margin-block: 2.4rem;
 }
 
+.Carousel__show-more-button {
+  display: flex;
+    justify-content: right;
+
+  margin-block-start: 1.4rem;
+
+}
+
 .cards-container {
   display: flex;
     gap: 1.2rem;

@@ -31,7 +31,9 @@ body {
     font-size: 1.6rem;
     color: $just-white;
 
-   background: $main-bg;
+  padding: 0 2.4rem;
+
+  background: $main-bg;
 }
 
 h1 {
@@ -42,5 +44,15 @@ h1 {
 h2 {
   font-size: 1.4rem;
     line-height: 1.8rem;
+}
+
+
+.Link {
+  text-decoration: none;
+  color: $just-white;
+}
+
+.inactive {
+  display: none;
 }
 

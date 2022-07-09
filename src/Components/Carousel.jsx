@@ -1,7 +1,9 @@
 import './Carousel.scss';
+import arrow from '../Assets/icons/arrow.svg';
 import Card from './Card';
+import Button from './Miscellaneous/Button';
 import { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 
 export default function Carousel(props) {
 
@@ -26,11 +28,34 @@ export default function Carousel(props) {
   return(
     <article className='Carousel'>
       <h1 className='Carousel-title'>{props.section}</h1>
-      <div className={props.section !== 'General' ? 'cards-container' : 'cards-container--grid'}>
+      <Link 
+        className={props.displayGrid ? 'inactive' : 'Link'}
+        to={`/${props.section}`}
+      >
+	<div 
+          className={ 
+	    props.section === 'General' 
+	      ? 'inactive' 
+	      : 'Carousel__show-more-button'}
+        >
+	  <Button
+	    text='Show More'
+	    icon={true}
+	    src={arrow}
+	    rotate={'-90deg'}
+	  />
+	</div>
+      </Link>
+      <div className={
+	props.displayGrid 
+	  ? 'cards-container--grid' 
+	  : 'cards-container'}
+      >
         {
 	  movies.map((movie, i) => {
 	    return <Card 
 	             key={i}
+	             id={movie.id}
 	             width={props.width}
 	             src={props.width === 'poster' ? movie.poster_path : movie.backdrop_path }
 	             title={movie.original_title}

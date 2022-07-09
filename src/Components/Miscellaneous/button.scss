@@ -6,8 +6,9 @@
 
   padding-inline: .8rem;
     padding-block: .4rem;
-    min-width: max-content;
     height: min-content;
+    min-width: max-content;
+    max-width: max-content;
 
   background: idx.$secondary-grey;
     border-radius: .4rem;

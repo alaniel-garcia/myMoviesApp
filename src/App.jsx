@@ -1,6 +1,10 @@
-
-import API, {API_EP_TRENDING, API_EP_DISCOVER, API_EP_GENRES} from './Api/API';
 import './App.scss';
+import {
+  API, 
+  API_EP_TRENDING, 
+  API_EP_DISCOVER, 
+  API_EP_GENRES
+} from './Api/API';
 import Carousel from './Components/Carousel';
 import Categories from './Components/Categories';
 import HamburguerMenu from './Components/Miscellaneous/HamburguerMenu';
@@ -41,14 +45,14 @@ function App() {
           endpoint={API_EP_GENRES}
           section='Categories'
         />
-        <Carousel
+    {/*<Carousel
           API ={API}
           endpoint={API_EP_DISCOVER}
           extraParams={'&page=1'}
           width={'poster'} 
           section='General' 
           language={lang}
-        />
+        />*/}
       </main>
     </div>
   );

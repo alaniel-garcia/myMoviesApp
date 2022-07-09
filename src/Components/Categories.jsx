@@ -18,7 +18,7 @@ export default function Genres(props){
     })
 
     if(status !== 200){
-      console.log(`Algo ocurrió: ${status}, ${data.message}`)
+      console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
     }
   }
 
