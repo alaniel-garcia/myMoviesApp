@@ -3,11 +3,15 @@ import { useEffect, useState } from 'react';
 import Carousel from './Carousel';
 import Button from './Miscellaneous/Button';
 
-export default function Genres(props){
+export default function Genres({
+  API,
+  endpoint,
+  section
+}){
   const [genres,setGenres] = useState({}); 
 
   async function getGenres(){
-    const {data, status} = await props.API(`${props.endpoint}`);
+    const {data, status} = await API(`${endpoint}`);
 
     data.genres.map(genre => {
       setGenres(
@@ -45,7 +49,7 @@ export default function Genres(props){
 
   return(
     <article className='Genres'>
-      <h1>{props.section}</h1>
+      <h1>{section}</h1>
       <div className='Genres__container'>
       {
 	Object.keys(genres)

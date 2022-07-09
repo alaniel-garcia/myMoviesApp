@@ -5,13 +5,19 @@ import Button from './Miscellaneous/Button';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Carousel(props) {
+export default function Carousel({
+  API,
+  endpoint,
+  section,
+  width,
+  ...props
+}) {
 
   const [movies, setMovies] = useState([]);
 
 
   async function getMovies(){
-    const {data, status} = await props.API(`${props.endpoint}`)
+    const {data, status} = await API(`${endpoint}`)
 
     setMovies(data.results)
 
@@ -27,14 +33,14 @@ export default function Carousel(props) {
 
   return(
     <article className='Carousel'>
-      <h1 className='Carousel-title'>{props.section}</h1>
+      <h1 className='Carousel-title'>{section}</h1>
       <Link 
         className={props.displayGrid ? 'inactive' : 'Link'}
-        to={`/${props.section}`}
+        to={`/${section}`}
       >
 	<div 
           className={ 
-	    props.section === 'General' 
+	    section === 'General' 
 	      ? 'inactive' 
 	      : 'Carousel__show-more-button'}
         >
@@ -56,8 +62,8 @@ export default function Carousel(props) {
 	    return <Card 
 	             key={i}
 	             id={movie.id}
-	             width={props.width}
-	             src={props.width === 'poster' ? movie.poster_path : movie.backdrop_path }
+	             width={width}
+	             src={width === 'poster' ? movie.poster_path : movie.backdrop_path }
 	             title={movie.original_title}
 	             overview={movie.overview}
 	             release={movie.release_date}

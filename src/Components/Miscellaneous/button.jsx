@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import './Button.scss';
 import colors from '../../index.scss'
 
-export default function Button(props){
+export default function Button({
+  active,
+  text,
+  ...props
+}){
 
   const [icon, setIcon] = useState({});
   const [style, setStyle] = useState({background: `${colors.secondaryGrey}`});
@@ -33,7 +37,7 @@ export default function Button(props){
 	return {background: colors.secondaryGrey}
       }
     })
-  }, [props.active]);
+  }, [active]);
 
 
   return(
@@ -41,11 +45,13 @@ export default function Button(props){
       className='Button' 
       style={style}
       onClick={ event =>{
-	props.onClick(event);
+	if(props.onClick){
+	  props.onClick(event);
+	}
       }}
     >
       <p className='Button__text'>
-	{props.text}
+	{text}
       </p>
       {
 	props.icon

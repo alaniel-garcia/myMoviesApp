@@ -11,8 +11,8 @@ export default function Card({
   width,
   src,
   title,
-  overview,
   release,
+  ...props
 }) {
 
 
@@ -37,7 +37,6 @@ export default function Card({
 	      icon={true}
 	      src={arrow}
 	      rotate={'-90deg'}
-	      onClick={() => null}
 	    />
           </Link>
         </div>
