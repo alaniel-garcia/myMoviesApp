@@ -8,6 +8,7 @@ const API = axios.create({
   },
   params: {
     'api_key': API_KEY,
+    'language': 'en-US',
   },
 });
 
