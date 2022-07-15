@@ -43,6 +43,13 @@ export default function Movie({API}){
   },[id]);
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  });
+
+  useEffect(() => {
     refBackgroundImgCover.current.style.background = `
       linear-gradient(
       rgba(

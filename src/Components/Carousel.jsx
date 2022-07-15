@@ -2,7 +2,7 @@ import './Carousel.scss';
 import arrow from '../Assets/icons/arrow.svg';
 import Card from './Card';
 import Button from './Miscellaneous/Button';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Carousel({
@@ -13,6 +13,7 @@ export default function Carousel({
   ...props
 }) {
   const [movies, setMovies] = useState([]);
+  const refCardsContainer = useRef();
 
 
   async function getMovies(){
@@ -28,6 +29,10 @@ export default function Carousel({
   useEffect(() =>{
     getMovies()
   },[props.movie]);
+
+  useEffect(() => {
+    refCardsContainer.current.scrollLeft = 0;
+  },[movies]);
 
   return(
     <article className='Carousel'>
@@ -50,7 +55,9 @@ export default function Carousel({
 	  />
 	</div>
       </Link>
-      <div className={
+      <div 
+        ref={refCardsContainer}
+        className={
 	props.displayGrid 
 	  ? 'cards-container--grid' 
 	  : 'cards-container'}
