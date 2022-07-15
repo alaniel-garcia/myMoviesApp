@@ -128,4 +128,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # KEY file [API KEY]
-src/KEY.js
+src/Api/KEY.js
