@@ -1,4 +1,6 @@
 import './MovieInfo.scss';
+import Carousel from './Carousel';
+import {API} from '../Api/API.js';
 
 function secondsToHm(min) {
     const h = Math.floor(min / 60);
@@ -24,10 +26,14 @@ function secondsToHm(min) {
     return time; 
 }
 
+
 export default function MovieInfo({
   movie,
   src,
 }){
+
+  const id = movie.info.id;
+
 
   return(
     <div className='Movie__info'>
@@ -72,8 +78,17 @@ export default function MovieInfo({
 	    })
 	  }
 	</div>
-       <div><br/><br/><br/></div>
-       </div>
-     </div>
+	{
+	  movie.info.id 
+            ? <Carousel 
+		API={API}
+	        width={'large'}
+		endpoint={`/movie/${id}/similar`} 
+		section={'Similar'}
+	        movie={movie}/>
+	    : null
+	}
+      </div>
+    </div>
   )
 }

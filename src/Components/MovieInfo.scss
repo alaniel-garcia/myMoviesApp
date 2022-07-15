@@ -2,13 +2,13 @@
 $info-container-radius: 1.6rem;
 
 .Movie__info {
-  position: fixed;
-    bottom: 0;
+  position: absolute;
+    top: 38%;
 
 
   width: 100vw;
-    height: 62%;
     padding: 0 1.6rem;
+    padding-block-start: 5.2rem;
 
   color: black;
 
@@ -39,11 +39,8 @@ $info-container-radius: 1.6rem;
 }
 
 .Movie__info-container {
-  margin-block-start: 5.2rem;
     width: 100%;
-    height: 100%;
 
-  overflow-y: scroll;
 }
 
 

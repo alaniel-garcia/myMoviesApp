@@ -14,6 +14,7 @@ import './index.scss';
 import App from './App';
 import Carousel from './Components/Carousel';
 import Movie from './Components/Movie';
+import Similar from './Components/Similar';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -43,8 +44,11 @@ root.render(
         <Route 
           path='/Movie/:id'
           element={
-	    <Movie API={API} />
+	    <Movie API={API}/>
 	  }/>
+	<Route 
+          path='/Movie/:id/Similar'
+          element={<Similar/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

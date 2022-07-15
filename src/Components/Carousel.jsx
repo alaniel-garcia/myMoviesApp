@@ -12,7 +12,6 @@ export default function Carousel({
   width,
   ...props
 }) {
-
   const [movies, setMovies] = useState([]);
 
 
@@ -28,15 +27,14 @@ export default function Carousel({
 
   useEffect(() =>{
     getMovies()
-  },[]);
-
+  },[props.movie]);
 
   return(
     <article className='Carousel'>
       <h1 className='Carousel-title'>{section}</h1>
       <Link 
         className={props.displayGrid ? 'inactive' : 'Link'}
-        to={`/${section}`}
+        to={`${section}`}
       >
 	<div 
           className={ 

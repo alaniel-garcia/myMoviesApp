@@ -40,7 +40,7 @@ export default function Movie({API}){
 
   useEffect(() => {
     getMovie();
-  },[]);
+  },[id]);
 
   useEffect(() => {
     refBackgroundImgCover.current.style.background = `

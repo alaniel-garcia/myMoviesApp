@@ -1,4 +1,5 @@
 @use './Card.scss' as card;
+@use '../index.scss' as idx;
 
 .Carousel {
   margin-block: 2.4rem;
@@ -17,6 +18,8 @@
     gap: 1.2rem;
   overflow-x: scroll;
   overflow-y: visible;
+
+  color: idx.$just-white;
 }
 
 .cards-container--grid {
