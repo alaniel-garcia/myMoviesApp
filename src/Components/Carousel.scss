@@ -3,13 +3,22 @@
 
 .Carousel {
   margin-block: 2.4rem;
+
+  .Link {
+    align-self: flex-end;
+  }
+}
+
+.Carousel__header {
+  display: flex;
+    justify-content: space-between;
+
 }
 
 .Carousel__show-more-button {
   display: flex;
     justify-content: right;
 
-  margin-block-start: 1.4rem;
 
 }
 
@@ -27,3 +36,4 @@
     grid-template-columns: repeat(auto-fill, minmax(card.$card-width--poster, 1fr));
     gap: 1.2rem;
 }
+

@@ -1,9 +1,24 @@
+.Genres__header {
+  display: flex;
+    justify-content: space-between;
+
+  .Genres__button {
+    align-self: flex-end;
+  }
+}
+
 .Genres__container {
   display: flex;
     column-gap: 1.4rem;
 
-  margin-block: 2.4rem;
+  margin-block-start: 2.4rem;
   height: 4rem;
 
   overflow-x: scroll;
+}
+
+.Genres__movies-container {
+  .Carousel{
+    margin: 0;
+  }
 }

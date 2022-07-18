@@ -15,6 +15,7 @@ const API = axios.create({
 const API_EP_TRENDING = '/trending/movie/day';
 const API_EP_DISCOVER = '/discover/movie';
 const API_EP_GENRES = '/genre/movie/list';
+const API_EP_SEARCH = '/search/movie';
 
 export default API;
 
@@ -22,5 +23,6 @@ export {
   API,
   API_EP_TRENDING,
   API_EP_DISCOVER,
-  API_EP_GENRES
+  API_EP_GENRES,
+  API_EP_SEARCH
 }

@@ -16,8 +16,14 @@ export default function Carousel({
   const refCardsContainer = useRef();
 
 
+  /*
+   * this function takes props.params which sets aditional parameters to the API call
+   * in case the parent component of Carousel needs it
+  */
   async function getMovies(){
-    const {data, status} = await API(`${endpoint}`)
+    const {data, status} = await API(`${endpoint}`,{
+                                   params: props.params
+                                 })
 
     setMovies(data.results)
 
@@ -26,35 +32,39 @@ export default function Carousel({
     }
   }
 
+  //rerenders the component when changing movie while in movies component
   useEffect(() =>{
     getMovies()
-  },[props.movie]);
+  },[props.movie,section]);
 
   useEffect(() => {
     refCardsContainer.current.scrollLeft = 0;
   },[movies]);
 
+
   return(
     <article className='Carousel'>
-      <h1 className='Carousel-title'>{section}</h1>
-      <Link 
-        className={props.displayGrid ? 'inactive' : 'Link'}
-        to={`${section}`}
-      >
-	<div 
-          className={ 
-	    section === 'General' 
-	      ? 'inactive' 
-	      : 'Carousel__show-more-button'}
-        >
-	  <Button
-	    text='Show More'
-	    icon={true}
-	    src={arrow}
-	    rotate={'-90deg'}
-	  />
-	</div>
-      </Link>
+      <div className='Carousel__header'>
+	<h1 className='Carousel-title'>{section}</h1>
+	<Link 
+	  className={props.notShowButton || props.displayGrid ? 'inactive' : 'Link'}
+	  to={`${section}`}
+	>
+	  <div 
+	    className={ 
+	      section === 'General' 
+		? 'inactive' 
+		: 'Carousel__show-more-button'}
+	  >
+	    <Button
+	      text='View all'
+	      icon={true}
+	      src={arrow}
+	      rotate={'-90deg'}
+	    />
+	  </div>
+	</Link>
+      </div>
       <div 
         ref={refCardsContainer}
         className={

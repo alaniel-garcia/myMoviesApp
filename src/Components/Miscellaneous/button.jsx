@@ -37,13 +37,18 @@ export default function Button({
 	return {background: colors.secondaryGrey}
       }
     })
-  }, [active]);
+    //conditional that is provided by categories component, and changes its style according 
+    //to the state in the respective component
+    if(props.genreReader){
+      props.genreReader()
+    }
+  },[active]);
 
 
   return(
     <div 
       className='Button' 
-      style={style}
+      style={props.onClick ? style : {background: 'transparent'}}
       onClick={ event =>{
 	if(props.onClick){
 	  props.onClick(event);

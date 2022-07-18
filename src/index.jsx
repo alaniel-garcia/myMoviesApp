@@ -15,6 +15,9 @@ import App from './App';
 import Carousel from './Components/Carousel';
 import Movie from './Components/Movie';
 import Similar from './Components/Similar';
+import Search from './Components/Search';
+import Nav from './Components/Nav';
+import {Fragment} from 'react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -24,22 +27,28 @@ root.render(
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/Trending' element={
-	  <Carousel 
-	    API={API} 
-	    endpoint={API_EP_TRENDING}
-	    width={'poster'} 
-	    section='Trending' 
-	    displayGrid={true}
-	  />
+	  <Fragment>
+	    <Nav />
+	    <Carousel 
+	      API={API} 
+	      endpoint={API_EP_TRENDING}
+	      width={'poster'} 
+	      section='Trending' 
+	      displayGrid={true}
+	    />
+	  </Fragment>
 	}/>
         <Route path='/Discover' element={
-	  <Carousel 
-	    API={API} 
-	    endpoint={API_EP_DISCOVER}
-	    width={'poster'} 
-	    section='Discover' 
-	    displayGrid={true}
-	  />
+	  <Fragment>
+	    <Nav />
+	    <Carousel 
+	      API={API} 
+	      endpoint={API_EP_DISCOVER}
+	      width={'poster'} 
+	      section='Discover' 
+	      displayGrid={true}
+	    />
+	  </Fragment>
 	}/>
         <Route 
           path='/Movie/:id'
@@ -49,6 +58,13 @@ root.render(
 	<Route 
           path='/Movie/:id/Similar'
           element={<Similar/>}/>
+        <Route path='/Search/:search'
+          element={
+	    <Fragment>
+	      <Nav />
+	      <Search/>
+	    </Fragment>
+	  }/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

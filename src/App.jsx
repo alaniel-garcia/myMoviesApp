@@ -7,23 +7,13 @@ import {
 } from './Api/API';
 import Carousel from './Components/Carousel';
 import Categories from './Components/Categories';
-import HamburguerMenu from './Components/Miscellaneous/HamburguerMenu';
-
-const lang = 'en';
+import Nav from './Components/Nav';
 
 function App() {
   return (
     <div className="App">
       <header>
-        <nav className='App-nav'>
-          <div className='searchbar'>
-            <input type="text" className='searchbar_text-field'/>
-            <span className="material-symbols-outlined">
-              search
-	    </span>
-          </div>
-          <HamburguerMenu />
-        </nav>
+        <Nav />
       </header>
       <main>
         <Carousel 
@@ -31,14 +21,12 @@ function App() {
           endpoint={API_EP_TRENDING}
           width={'large'} 
           section='Trending' 
-          language={lang}
         />
         <Carousel
           API ={API}
           endpoint={API_EP_DISCOVER}
           width={'poster'} 
           section='Discover' 
-          language={lang}
         />
         <Categories 
           API ={API}
