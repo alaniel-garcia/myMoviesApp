@@ -22,8 +22,8 @@ export default function Carousel({
   */
   async function getMovies(){
     const {data, status} = await API(`${endpoint}`,{
-                                   params: props.params
-                                 })
+      params: props.params
+    })
 
     setMovies(data.results)
 
@@ -35,7 +35,7 @@ export default function Carousel({
   //rerenders the component when changing movie while in movies component
   useEffect(() =>{
     getMovies()
-  },[props.movie,section]);
+  },[props.movie,section,props.params]);
 
   useEffect(() => {
     refCardsContainer.current.scrollLeft = 0;

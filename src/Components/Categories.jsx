@@ -11,6 +11,7 @@ export default function Genres({
   section
 }){
   const [genres,setGenres] = useState({All: {id: '00', current: false}}); 
+  const [paramsToSend, setParamsToSend] = useState();
 
   async function getGenres(){
     const {data, status} = await API(`${endpoint}`);
@@ -34,14 +35,26 @@ export default function Genres({
 
   function genreSelectHandler(event) {
     //event.stopPropagation();
-    const genreToSet = event.target.innerText
+    const genreToSet = event.target.innerText;
 
     /* set selected genre current status to true/false mantaining prevState by using spread operator */
-    //if statement works to avoid click over a non-button area close to buttons actually represent a click which
-    //throw an error of undefined property "current", event.stopPropagation() didn't work :c
-    setGenres( (prevState) =>  ({
-      ...prevState, [genreToSet]: {...prevState[genreToSet], current: !prevState[genreToSet].current}  
-    }))
+    if(genreToSet === 'All'){
+      const genresStateReader = Object.keys(genres);
+      genresStateReader.shift();
+      
+      for(let gen of genresStateReader){
+	setGenres( (prevState) =>  {
+	  return {
+	    ...prevState, [gen]: {...prevState[gen], current: false}  
+	  }
+	})
+      }
+    }
+    else {
+      setGenres( (prevState) =>  ({
+	...prevState, [genreToSet]: {...prevState[genreToSet], current: !prevState[genreToSet].current}  
+      }))
+    }
 
       
 
@@ -65,8 +78,25 @@ export default function Genres({
     }
   }
 
+  function updateParamsToSend(){
+    const genresStateReader = Object.entries(genres);
+    genresStateReader.shift();
+
+    let genresFiltered = []; 
+
+    genresStateReader.map( gen => {
+      if(gen[1].current){
+	genresFiltered.push(gen[1].id)
+      }
+    });
+
+    setParamsToSend(genresFiltered.join(','))
+    console.log(genres.All.current)
+  }
+
   useEffect(() => {
     console.log("updated",genres)
+    updateParamsToSend()
   },[genres]);
 
   return(
@@ -103,8 +133,12 @@ export default function Genres({
 	  endpoint={API_EP_DISCOVER}
 	  width={'large'} 
 	  notShowButton={true}
-          params={{
-	  }}
+          params={ genres.All.current 
+	    ? {}
+	    : {
+	      with_genres: paramsToSend
+	    }
+	  }
 	/>
       </div>
     </article>
