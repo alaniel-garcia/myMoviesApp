@@ -4,14 +4,17 @@ import { useEffect, useState } from 'react';
 import Carousel from './Carousel';
 import Button from './Miscellaneous/Button';
 import {API_EP_DISCOVER} from '../Api/API';
+import {useNavigate} from 'react-router-dom';
 
-export default function Genres({
+export default function Categories({
   API,
   endpoint,
-  section
+  section,
+  ...props
 }){
-  const [genres,setGenres] = useState({All: {id: '00', current: false}}); 
-  const [paramsToSend, setParamsToSend] = useState();
+  const [genres,setGenres] = useState({All: {id: '00', current: true}}); 
+  const [paramsToSend, setParamsToSend] = useState([]);
+  const navigate = useNavigate();
 
   async function getGenres(){
     const {data, status} = await API(`${endpoint}`);
@@ -27,7 +30,18 @@ export default function Genres({
     if(status !== 200){
       console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
     }
+
+    if(props.pageCategories){
+      for(let gen of props.state){
+	setGenres( (prevState) =>  {
+	  return {
+	    ...prevState, [gen]: {...prevState[gen], current: true}  
+	  }
+	})
+      }
+    }
   }
+
 
   useEffect(()=>{
     getGenres();
@@ -56,7 +70,6 @@ export default function Genres({
       }))
     }
 
-      
 
   }
 
@@ -78,34 +91,73 @@ export default function Genres({
     }
   }
 
-  function updateParamsToSend(){
+  //function that manipulate genres in order to set params for either, routing or API call
+  function getParams(destination){
     const genresStateReader = Object.entries(genres);
     genresStateReader.shift();
 
     let genresFiltered = []; 
+    let genresFilteredId = [];
+    let genresFilteredName = [];
 
     genresStateReader.map( gen => {
       if(gen[1].current){
-	genresFiltered.push(gen[1].id)
+	genresFiltered.push([gen[1].id, gen[0]])
       }
     });
 
-    setParamsToSend(genresFiltered.join(','))
-    console.log(genres.All.current)
+    genresFiltered.map( gen => {
+      genresFilteredId.push(gen[0])
+    });
+
+    genresFiltered.map( gen => {
+      genresFilteredName.push(gen[1])
+    });
+
+
+    if(destination === 'API_PARAMS'){
+      return genresFilteredId.join(',')
+    }
+    else if(destination === 'PageCategories'){
+      return genresFilteredName
+    }
+    else{
+      setParamsToSend(genresFiltered)
+    }
+
+  }
+
+  function navigateToCategories(){
+
+    let gnres = paramsToSend.flatMap(gen => gen)
+    
+    if(gnres.length === 0){
+      gnres = ['all']
+    }
+    navigate(`/Categories/genres=${gnres.join('-')}`,{
+      state: {
+	params: getParams('PageCategories'),
+      }
+    })
   }
 
   useEffect(() => {
-    console.log("updated",genres)
-    updateParamsToSend()
+    getParams()
   },[genres]);
+
+  useEffect(() => {
+    if(props.pageCategories){
+      navigateToCategories()
+    }
+  },[paramsToSend]);
 
   return(
     <article className='Genres'>
       <div className='Genres__header'>
         <h1>{section}</h1>
-        <div className='Genres__button'>
+	<div onClick={navigateToCategories} className='Genres__button'>
 	  <Button
-	    text='View all'
+	    text='Complete view'
 	    icon={true}
 	    src={arrow}
 	    rotate={'-90deg'}
@@ -131,12 +183,13 @@ export default function Genres({
 	<Carousel 
 	  API={API} 
 	  endpoint={API_EP_DISCOVER}
-	  width={'large'} 
+	  width={props.pageCategories ? 'poster' : 'large'} 
 	  notShowButton={true}
+          displayGrid={props.pageCategories ? true : false}
           params={ genres.All.current 
 	    ? {}
 	    : {
-	      with_genres: paramsToSend
+	      with_genres: getParams('API_PARAMS') 
 	    }
 	  }
 	/>

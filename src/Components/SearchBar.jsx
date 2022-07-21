@@ -5,11 +5,18 @@ import './SearchBar.scss';
 export default function SearchBar(){
 
   const navigate = useNavigate();
-  const refTextInput = useRef();
+  let refTextInput = useRef();
 
   function searchEventHandler(){
     const search = refTextInput.current.value;
-    navigate(`/Search/${search}`);
+    if(search){
+      navigate(`/Search/${search}`);
+    }
+    else{
+      return null
+    }
+    refTextInput.current.value = '';
+
   }
 
   return <div className='searchbar'>

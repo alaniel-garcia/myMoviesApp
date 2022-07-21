@@ -18,6 +18,7 @@ import Similar from './Components/Similar';
 import Search from './Components/Search';
 import Nav from './Components/Nav';
 import {Fragment} from 'react';
+import PageCategories from './Pages/PageCategories';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -65,6 +66,14 @@ root.render(
 	      <Search/>
 	    </Fragment>
 	  }/>
+        <Route path='/Categories/:gnres' 
+          element={
+	    <Fragment>
+	      <Nav />
+	      <PageCategories />
+	    </Fragment>
+	  }
+        />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

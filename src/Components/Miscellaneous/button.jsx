@@ -29,8 +29,8 @@ export default function Button({
 
 
   useEffect(() => {
-    setStyle( prevState => {
-      if(prevState.background === colors.secondaryGrey){
+    setStyle( () => {
+      if(active){
 	return {background: colors.secondaryRed}
       }
       else{

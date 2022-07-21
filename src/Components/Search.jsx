@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom';
 
 export default function Search(){
   const params = useParams();
-  const query = params.search;
+  let query = params.search;
+  query = query[0].toUpperCase() + query.slice(1);
 
   return(
     <Carousel 
