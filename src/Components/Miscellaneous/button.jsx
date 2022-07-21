@@ -44,11 +44,21 @@ export default function Button({
     }
   },[active]);
 
+  function setBackground(){
+    if(props.background){
+      return {background: `${colors.secondaryGrey}`}
+    }
+    else{
+      return {background: 'transparent'}
+    }
+  }
 
   return(
     <div 
       className='Button' 
-      style={props.onClick ? style : {background: 'transparent'}}
+      style={
+	props.onClick ? style : setBackground()
+      }
       onClick={ event =>{
 	if(props.onClick){
 	  props.onClick(event);

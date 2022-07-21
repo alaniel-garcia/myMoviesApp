@@ -2,6 +2,7 @@ import './Card.scss';
 import arrow from '../Assets/icons/arrow.svg';
 import Button from './Miscellaneous/Button';
 import { Link } from 'react-router-dom';
+import { useRef } from 'react';
 
 const API_URL_IMG_LARGE = 'https://image.tmdb.org/t/p/w500';
 
@@ -15,13 +16,30 @@ export default function Card({
   ...props
 }) {
 
+  const style = {
+    borderRadius: '.6rem',
+    boxShadow: '.2rem .2rem 1.6rem black'
+  }
+
   return(
     <div className={width}>     
-      <img 
-        className='card__movie-img--large'
-        src={API_URL_IMG_LARGE + src} 
-        alt={title} 
-      />
+      {
+	src ?
+	  <img 
+	    className='card__movie-img--large'
+	    src={API_URL_IMG_LARGE + src} 
+	    alt={title} 
+	  />
+	  :
+	  <div 
+	    className='card__movie-no-img'
+            style={width === 'poster' ? style : null}>
+	    <h2 
+	      className='movie-no-img__title'
+	      style={width !== 'poster' ? {display: 'none'} : null }>
+	    {title}</h2>
+	  </div>
+      }
       <h2 className='card__title'>
         {title}
       </h2>
@@ -36,6 +54,7 @@ export default function Card({
 	      icon={true}
 	      src={arrow}
 	      rotate={'-90deg'}
+              background={true}
 	    />
           </Link>
         </div>

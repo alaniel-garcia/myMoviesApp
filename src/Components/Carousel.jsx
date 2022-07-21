@@ -61,6 +61,7 @@ export default function Carousel({
 	      icon={true}
 	      src={arrow}
 	      rotate={'-90deg'}
+              background={section === 'Similar' ? true : false}
 	    />
 	  </div>
 	</Link>

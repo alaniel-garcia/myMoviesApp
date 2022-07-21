@@ -83,6 +83,10 @@ $card-width--hover: 1.6rem;
 	  black 
 	);
     }
+
+    .card__movie-no-img .movie-no-img__title{
+      display: none;
+    }
   }
 }
 
@@ -134,4 +138,20 @@ $card-width--hover: 1.6rem;
   border-radius: $card-radius;
   height: 100%;
   display: initial;
+}
+
+.card__movie-no-img {
+  display: grid;
+    place-content: center;
+
+  text-align: center;
+
+  height: 100%;
+
+  background: idx.$main-bg;
+    color: idx.$secondary-grey;
+    border-top-left-radius: .6rem;
+    border-top-right-radius: .6rem;
+
+
 }
