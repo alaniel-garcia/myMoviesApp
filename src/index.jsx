@@ -7,18 +7,18 @@ import {
 } from 'react-router-dom';
 import {
   API, 
-  API_EP_TRENDING, 
-  API_EP_DISCOVER, 
 } from './Api/API';
 import './index.scss';
 import App from './App';
-import Carousel from './Components/Carousel';
 import Movie from './Components/Movie';
-import Similar from './Components/Similar';
 import Search from './Components/Search';
 import Nav from './Components/Nav';
 import {Fragment} from 'react';
 import PageCategories from './Pages/PageCategories';
+import PageTrending from './Pages/PageTrending';
+import PageDiscover from './Pages/PageDiscover';
+import PageSimilar from './Pages/PageSimilar';
+import PageSearch from './Pages/PageSearch';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -28,28 +28,10 @@ root.render(
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/Trending' element={
-	  <Fragment>
-	    <Nav />
-	    <Carousel 
-	      API={API} 
-	      endpoint={API_EP_TRENDING}
-	      width={'poster'} 
-	      section='Trending' 
-	      displayGrid={true}
-	    />
-	  </Fragment>
+	  <PageTrending />
 	}/>
         <Route path='/Discover' element={
-	  <Fragment>
-	    <Nav />
-	    <Carousel 
-	      API={API} 
-	      endpoint={API_EP_DISCOVER}
-	      width={'poster'} 
-	      section='Discover' 
-	      displayGrid={true}
-	    />
-	  </Fragment>
+	  <PageDiscover />
 	}/>
         <Route 
           path='/Movie/:id'
@@ -58,20 +40,24 @@ root.render(
 	  }/>
 	<Route 
           path='/Movie/:id/Similar'
-          element={<Similar/>}/>
+          element={
+	    <PageSimilar/>
+	  }/>
+        <Route 
+          path='/Search'
+          element={
+	    <PageSearch/>
+	  }/>
         <Route path='/Search/:search'
           element={
-	    <Fragment>
+	    <div style={{paddingInline: '2.4rem'}}>
 	      <Nav />
 	      <Search/>
-	    </Fragment>
+	    </div>
 	  }/>
         <Route path='/Categories/:gnres' 
           element={
-	    <Fragment>
-	      <Nav />
-	      <PageCategories />
-	    </Fragment>
+	    <PageCategories />
 	  }
         />
       </Routes>

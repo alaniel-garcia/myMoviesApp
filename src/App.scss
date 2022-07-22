@@ -9,8 +9,10 @@
 //
 
 .App {
+  /*
   position: relative;
-
+*/
+  padding: 0 2.4rem;
 }
 
 .App-nav {
@@ -24,6 +26,10 @@
   .HamburguerMenu {
   }
 
+}
+
+.Page-padded {
+  padding-inline: 2.4rem;
 }
 
 

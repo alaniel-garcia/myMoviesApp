@@ -6,7 +6,6 @@ export default function Search(){
   const params = useParams();
   let query = params.search;
   query = query[0].toUpperCase() + query.slice(1);
-
   return(
     <Carousel 
       API={API}
