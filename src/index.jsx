@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import {
   BrowserRouter,
   Routes, 
-  Route
+  Route,
+  Navigate
 } from 'react-router-dom';
 import {
   API, 
@@ -13,7 +14,6 @@ import App from './App';
 import Movie from './Components/Movie';
 import Search from './Components/Search';
 import Nav from './Components/Nav';
-import {Fragment} from 'react';
 import PageCategories from './Pages/PageCategories';
 import PageTrending from './Pages/PageTrending';
 import PageDiscover from './Pages/PageDiscover';
@@ -54,6 +54,10 @@ root.render(
 	      <Nav />
 	      <Search/>
 	    </div>
+	  }/>
+        <Route path='/Categories' 
+          element={
+	    <Navigate to='/Categories/:gnres' />
 	  }/>
         <Route path='/Categories/:gnres' 
           element={
