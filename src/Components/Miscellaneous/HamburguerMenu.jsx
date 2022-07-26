@@ -1,9 +1,10 @@
 import './HamburguerMenu.scss';
 
 export default function HamburguerMenu({
-  menuOnClick
+  menuOnClick,
+  ...props
 }){
-  return  <div className='HamburguerMenu' 
+  return  <div className={props.rounded ? 'HamburguerMenu HamburguerMenu--rounded' : 'HamburguerMenu'} 
                onClick={ () => menuOnClick(
 		 (prevState) => {
 		   if(prevState === true){
@@ -14,8 +15,10 @@ export default function HamburguerMenu({
 		   }
 		 }
 	       )}>
-	    <div className='HamburguerMenu-bar'></div>
-	    <div className='HamburguerMenu-bar'></div>
-	    <div className='HamburguerMenu-bar'></div>
+            <div className='HamburguerMenu-bars-wrapper'>
+	      <div className='HamburguerMenu-bar'></div>
+	      <div className='HamburguerMenu-bar'></div>
+	      <div className='HamburguerMenu-bar'></div>
+            </div>
 	  </div>
 }

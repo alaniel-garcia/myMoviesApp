@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import ColorThief from 'colorthief';
 import MovieInfo from './MovieInfo';
+import Nav from './Nav';
 
 
 export default function Movie({API}){
@@ -63,6 +64,9 @@ export default function Movie({API}){
   
   return (
     <div className='Movie'>
+      <div className='Movie__nav'>
+	<Nav parentComp={'Movie'}/>
+      </div>
       <img 
 	crossOrigin={""}
         className='background-img' 

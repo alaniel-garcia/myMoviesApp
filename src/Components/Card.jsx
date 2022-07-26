@@ -2,7 +2,6 @@ import './Card.scss';
 import arrow from '../Assets/icons/arrow.svg';
 import Button from './Miscellaneous/Button';
 import { Link } from 'react-router-dom';
-import { useRef } from 'react';
 
 const API_URL_IMG_LARGE = 'https://image.tmdb.org/t/p/w500';
 

@@ -5,6 +5,20 @@
 
 
   height: 100%;
+  width: 100%;
+}
+
+.Movie__nav {
+  position: absolute;
+  z-index: 100;
+
+  padding-inline: 2.4rem;
+  width: 100%;
+
+
+  .searchbar {
+    display: none;
+  }
 }
 
 .background-img {
