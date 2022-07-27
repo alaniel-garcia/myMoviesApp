@@ -4,6 +4,7 @@ import Card from './Card';
 import Button from './Miscellaneous/Button';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import colors from '../index.scss';
 
 export default function Carousel({
   API,
@@ -14,6 +15,9 @@ export default function Carousel({
 }) {
   const [movies, setMovies] = useState([]);
   const refCardsContainer = useRef();
+  const refContentOnLeft = useRef();
+  const refContentOnRight = useRef();
+  const background= props.movie ? colors.white : colors.mainBg;
 
 
   /*
@@ -41,6 +45,24 @@ export default function Carousel({
     refCardsContainer.current.scrollLeft = 0;
   },[movies]);
 
+  //sets the content delimiter elements to display or not based on if there is or not content left on each side of the carousel
+  function scrollAvailable(){
+    if(refCardsContainer?.current?.scrollLeft > 0){
+      refContentOnLeft.current.style.display = 'initial';
+    }
+    else{
+      refContentOnLeft.current.style.display = 'none';
+
+    }
+
+    if(refCardsContainer.current?.scrollLeft !== (refCardsContainer.current.scrollWidth - refCardsContainer.current.clientWidth)){
+      refContentOnRight.current.style.display = 'initial';
+    }
+    else{
+      refContentOnRight.current.style.display = 'none';
+    }
+  }
+
 
   return(
     <article className='Carousel'>
@@ -66,26 +88,39 @@ export default function Carousel({
 	  </div>
 	</Link>
       </div>
-      <div 
-        ref={refCardsContainer}
-        className={
-	props.displayGrid 
-	  ? 'cards-container--grid' 
-	  : 'cards-container'}
-      >
-        {
-	  movies.map((movie, i) => {
-	    return <Card 
-	             key={i}
-	             id={movie.id}
-	             width={width}
-	             src={width === 'poster' ? movie.poster_path : movie.backdrop_path }
-	             title={movie.original_title}
-	             overview={movie.overview}
-	             release={movie.release_date}
-	           />
-	  })
-	}
+      <div className='Carousel__main-content'>
+        <div 
+          ref={refContentOnLeft} 
+          className='content-on-left'
+          style={{backgroundImage: `linear-gradient(to right, ${background} 35%, transparent 100%)`}}
+          ></div>
+        <div 
+          ref={refContentOnRight} 
+          className='content-on-right'
+          style={{backgroundImage: `linear-gradient(to left, ${background} 35%, transparent 100%)`}}
+          ></div>
+	<div 
+	  onScroll={scrollAvailable}
+	  ref={refCardsContainer}
+	  className={
+	  props.displayGrid 
+	    ? 'cards-container--grid' 
+	    : 'cards-container'}
+	>
+	  {
+	    movies.map((movie, i) => {
+	      return <Card 
+		       key={i}
+		       id={movie.id}
+		       width={width}
+		       src={width === 'poster' ? movie.poster_path : movie.backdrop_path }
+		       title={movie.original_title}
+		       overview={movie.overview}
+		       release={movie.release_date}
+		     />
+	    })
+	  }
+	</div>
       </div>
     </article>
   )

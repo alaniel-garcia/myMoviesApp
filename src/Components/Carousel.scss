@@ -1,12 +1,44 @@
 @use './Card.scss' as card;
 @use '../index.scss' as idx;
 
+%content-delimiter {
+    position: absolute;
+    z-index  : 2000;
+    top: 0;
+    bottom: 0;
+
+  width: 3rem;
+    height: 100%;
+
+  pointer-events   : none;
+  
+}
+
 .Carousel {
   margin-block: 2.4rem;
 
   .Link {
     align-self: flex-end;
   }
+}
+
+.Carousel__main-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: transparent;
+}
+
+.content-on-left {
+  @extend %content-delimiter;
+  display: none;
+    left: -.1rem;
+
+}
+
+.content-on-right {
+  @extend %content-delimiter;
+    right: -.1rem;
 }
 
 .Carousel__header {
@@ -23,6 +55,7 @@
 }
 
 .cards-container {
+  position: relative;
   display: flex;
     gap: 1.2rem;
   overflow-x: scroll;

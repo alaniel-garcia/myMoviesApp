@@ -26,7 +26,6 @@ export default function Menu({
 	//setTimeOut used to not overlap the onClick function
 	//of hamburguerMenu and the false state can be set after the changes of states by the respective onClick function
 	setTimeout(() =>{
-	  console.log(e.target)
 	  menuOnClickOutside(false)
 	},0);
       }
