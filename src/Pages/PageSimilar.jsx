@@ -1,7 +1,9 @@
 import Carousel from '../Components/Carousel';
 import Nav from '../Components/Nav';
+import ArrowButton from '../Components/Miscellaneous/ArrowButton';
 import {API} from '../Api/API';
 import { useParams } from 'react-router-dom';
+import {goTop} from './pagesSharedFunctionalities';
 
 export default function PageSimilar(){
 
@@ -15,5 +17,8 @@ export default function PageSimilar(){
 	      section={'Similar'}
 	      displayGrid={true}
 	      id={id}/>
+	    <ArrowButton 
+	      onClick={goTop} 
+	      functionality={'go-top'}/>
 	  </div>
 }

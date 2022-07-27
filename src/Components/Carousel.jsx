@@ -2,7 +2,7 @@ import './Carousel.scss';
 import arrow from '../Assets/icons/arrow.svg';
 import Card from './Card';
 import Button from './Miscellaneous/Button';
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import colors from '../index.scss';
 
@@ -89,17 +89,25 @@ export default function Carousel({
 	</Link>
       </div>
       <div className='Carousel__main-content'>
-        <div 
-          ref={refContentOnLeft} 
-          className='content-on-left'
-          style={{backgroundImage: `linear-gradient(to right, ${background} 35%, transparent 100%)`}}
-          ></div>
-        <div 
-          ref={refContentOnRight} 
-          className='content-on-right'
-          style={{backgroundImage: `linear-gradient(to left, ${background} 35%, transparent 100%)`}}
-          ></div>
-	<div 
+        {
+	  //in case this component is not rendered as grid layout, there will be lateral
+	  //delimiters of content
+	  !props.displayGrid
+	    ?  <Fragment> 
+	         <div 
+		  ref={refContentOnLeft} 
+		  className='content-on-left'
+		  style={{backgroundImage: `linear-gradient(to right, ${background} 35%, transparent 100%)`}}
+		  ></div>
+		  <div 
+		    ref={refContentOnRight} 
+		    className='content-on-right'
+		    style={{backgroundImage: `linear-gradient(to left, ${background} 35%, transparent 100%)`}}
+		    ></div>
+	      </Fragment>
+	    : null
+	}
+        	<div 
 	  onScroll={scrollAvailable}
 	  ref={refCardsContainer}
 	  className={

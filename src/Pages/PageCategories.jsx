@@ -1,8 +1,10 @@
 import './PageCategories.scss';
+import {goTop} from './pagesSharedFunctionalities';
+import {API,API_EP_GENRES} from '../Api/API';
 import {useLocation} from 'react-router-dom';
 import Categories from '../Components/Categories';
 import Nav from '../Components/Nav';
-import {API,API_EP_GENRES} from '../Api/API';
+import ArrowButton from '../Components/Miscellaneous/ArrowButton';
 
 export default function PageCategories(){
   const location = useLocation();
@@ -20,5 +22,8 @@ export default function PageCategories(){
 		state={params}
 	      />
 	    </div>
+	    <ArrowButton 
+	      onClick={goTop} 
+	      functionality={'go-top'}/>
 	  </div>
 }

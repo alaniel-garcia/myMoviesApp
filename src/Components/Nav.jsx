@@ -1,13 +1,19 @@
 import './Nav.scss';
 import SearchBar from './SearchBar';
 import HamburguerMenu from './Miscellaneous/HamburguerMenu';
-import BackButton from './Miscellaneous/BackButton';
+import ArrowButton from './Miscellaneous/ArrowButton';
 import Menu from './Menu';
 import { useEffect, useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 
 export default function Nav(props){
 
   const [menuActive, setMenuActive] = useState(false);
+  const navigate = useNavigate();
+
+  function goBack(){
+    navigate(-1)
+  }
 
   useEffect(()=>{
   },[menuActive])
@@ -15,7 +21,7 @@ export default function Nav(props){
   return <nav className='App-nav'>
            {
 	     props.parentComp === 'Movie' 
-	       ? <BackButton />
+	       ? <ArrowButton onClick={goBack}/>
 	       : null
 	   }
            <SearchBar />
