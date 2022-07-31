@@ -5,6 +5,52 @@ import Button from './Miscellaneous/Button';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import colors from '../index.scss';
+import Skeleton from '@mui/material/Skeleton';
+
+//function that loads skeletons for movie cards, also set the type and quantity for different cases
+function loadingSkeleton(cardWidth){
+  const locationPath = window.location.pathname;
+  const width = cardWidth === 'large' ? 24 : 15;
+  const height = cardWidth === 'large' ? 13.8 : 22.9;
+  const screenSize = window.innerWidth / 10;
+  let numCardsToPrint = Math.floor((screenSize / width) + 1);
+  const cardsToprint = []; 
+  let skeletonColor;
+
+  if(locationPath.includes('Movie') && !locationPath.includes('Similar')){
+    skeletonColor = 'default';
+  }
+  else{
+    skeletonColor = colors.secondaryGrey;
+  }
+
+  if(locationPath !== '/')numCardsToPrint *=2.5;
+
+
+
+  for(let i = 1; i <= numCardsToPrint; i++){
+     cardsToprint.push(<div>
+	      <Skeleton 
+		sx={
+		  { bgcolor: skeletonColor,
+		    marginBlock: '.8rem'
+		  }
+		}
+		variant='rectangular' 
+		width={width + 'rem'} 
+		height={height + 'rem'}>
+	      </Skeleton>
+	      <Skeleton 
+		sx={
+		  { bgcolor: skeletonColor }
+		}
+		variant='rectangular' 
+		width={width + 'rem'} 
+		height={'2rem'}/>
+	    </div>)
+  }
+  return cardsToprint
+}
 
 export default function Carousel({
   API,
@@ -13,7 +59,7 @@ export default function Carousel({
   width,
   ...props
 }) {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState();
   const refCardsContainer = useRef();
   const refContentOnLeft = useRef();
   const refContentOnRight = useRef();
@@ -93,18 +139,15 @@ export default function Carousel({
 	  //in case this component is not rendered as grid layout, there will be lateral
 	  //delimiters of content
 	  !props.displayGrid
-	    ?  <Fragment> 
-	         <div 
+	    ?  <Fragment><div 
 		  ref={refContentOnLeft} 
 		  className='content-on-left'
 		  style={{backgroundImage: `linear-gradient(to right, ${background} 35%, transparent 100%)`}}
-		  ></div>
-		  <div 
+		  ></div><div 
 		    ref={refContentOnRight} 
 		    className='content-on-right'
 		    style={{backgroundImage: `linear-gradient(to left, ${background} 35%, transparent 100%)`}}
-		    ></div>
-	      </Fragment>
+		    ></div></Fragment>
 	    : null
 	}
         	<div 
@@ -115,18 +158,20 @@ export default function Carousel({
 	    ? 'cards-container--grid' 
 	    : 'cards-container'}
 	>
-	  {
-	    movies.map((movie, i) => {
+	  {movies &&
+	    movies.map((movie) => {
 	      return <Card 
-		       key={i}
+		       key={movie.id}
 		       id={movie.id}
 		       width={width}
 		       src={width === 'poster' ? movie.poster_path : movie.backdrop_path }
 		       title={movie.original_title}
-		       overview={movie.overview}
 		       release={movie.release_date}
 		     />
 	    })
+	  }
+          {
+	    !movies && loadingSkeleton(width)
 	  }
 	</div>
       </div>
