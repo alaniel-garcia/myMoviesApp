@@ -2,8 +2,8 @@ import './Card.scss';
 import arrow from '../Assets/icons/arrow.svg';
 import Button from './Miscellaneous/Button';
 import { Link } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 
-const API_URL_IMG_LARGE = 'https://image.tmdb.org/t/p/w500';
 
 
 export default function Card({
@@ -14,19 +14,38 @@ export default function Card({
   release,
   ...props
 }) {
-
   const style = {
     borderRadius: '.6rem',
     boxShadow: '.2rem .2rem 1.6rem black'
   }
+
+  const imgSize = width === 'poster' ? 'w200' : 'w300';
+  const API_URL_IMG_LARGE = `https://image.tmdb.org/t/p/${imgSize}`;
+  const refMovieCardImg = useRef();
+
+  useEffect(() => {
+
+    const observer = new IntersectionObserver(entries => {
+      entries.map(card => {
+	if(card.isIntersecting){
+	  card.target.setAttribute('src', `${API_URL_IMG_LARGE}${src}`)
+	}
+      })
+    })
+    if(refMovieCardImg.current){
+      observer.observe(refMovieCardImg.current)
+    }
+
+  },[]);
+
 
   return(
     <div className={width}>     
       {
 	src ?
 	  <img 
+	    ref={refMovieCardImg}
 	    className='card__movie-img--large'
-	    src={API_URL_IMG_LARGE + src} 
 	    alt={title} 
 	  />
 	  :

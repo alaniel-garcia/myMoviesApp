@@ -29,7 +29,7 @@ function loadingSkeleton(cardWidth){
 
 
   for(let i = 1; i <= numCardsToPrint; i++){
-     cardsToprint.push(<div>
+     cardsToprint.push(<div key={i}>
 	      <Skeleton 
 		sx={
 		  { bgcolor: skeletonColor,

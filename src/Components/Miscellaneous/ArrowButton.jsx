@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import arrow from '../../Assets/icons/arrow.svg';
 import './ArrowButton.scss';
 
@@ -9,9 +9,16 @@ export default function ArrowButton({
 
   const refArrowButton = useRef();
 
-  if(props.functionality === 'go-top'){
-    window.onscroll = () => showArrowButton();
-  }
+  useEffect(() => {
+    if(props.functionality === 'go-top'){
+      window.onscroll = () => showArrowButton();
+    }
+    return(() => {
+      if(props.functionality === 'go-top'){
+	window.onscroll = null
+      }
+    })
+  },[]);
 
   function showArrowButton(){
     if(document.documentElement.scrollTop >= window.innerHeight){
