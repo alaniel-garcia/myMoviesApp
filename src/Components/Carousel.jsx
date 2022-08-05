@@ -6,6 +6,9 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import colors from '../index.scss';
 import Skeleton from '@mui/material/Skeleton';
+import {v4 as keyGenerator } from 'uuid';
+
+
 
 //function that loads skeletons for movie cards, also set the type and quantity for different cases
 function loadingSkeleton(cardWidth){
@@ -42,7 +45,9 @@ function loadingSkeleton(cardWidth){
 	      </Skeleton>
 	      <Skeleton 
 		sx={
-		  { bgcolor: skeletonColor }
+		  { bgcolor: skeletonColor,
+		    marginBlockEnd: '2.4rem'
+		  }
 		}
 		variant='rectangular' 
 		width={width + 'rem'} 
@@ -64,6 +69,21 @@ export default function Carousel({
   const refContentOnLeft = useRef();
   const refContentOnRight = useRef();
   const background= props.movie ? colors.white : colors.mainBg;
+  const locationPath = window.location.pathname;
+  let page = 1;
+
+  let infiniteScroll = () =>{
+    const endOfPage = window.innerHeight + window.pageYOffset >= (document.body.offsetHeight - window.innerHeight);
+
+
+    if(endOfPage){
+      window.removeEventListener('scroll', infiniteScroll)
+      getPaginatedMovies()
+      setTimeout(() =>{
+	window.addEventListener('scroll', infiniteScroll)
+      },500);
+    }
+  };
 
 
   /*
@@ -71,9 +91,11 @@ export default function Carousel({
    * in case the parent component of Carousel needs it
   */
   async function getMovies(){
+
     const {data, status} = await API(`${endpoint}`,{
-      params: props.params
+      params: props.params ? props.params : {}
     })
+ 
 
     setMovies(data.results)
 
@@ -82,14 +104,58 @@ export default function Carousel({
     }
   }
 
+
+  async function getPaginatedMovies(){
+    try{
+        page++;
+	props.params['page'] = page;
+
+	const {data, status} = await API(`${endpoint}`,{
+	  params: props.params 
+	})
+
+	setMovies((prevState = []) => {
+	  return [...prevState,...data.results]
+	})
+
+	if(status !== 200){
+	  console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
+	}
+
+    }
+    catch(error){
+      console.log(error)
+    }
+
+
+  }
+
+
+  // sets an infinite scroll  event listener when mounting and removes it when unmounting component
+  // Also reset the movie page and calls API when locationPath changes
+  useEffect(() => {
+    page = 1
+    getMovies()
+    if(props.infiniteScroll){
+      window.addEventListener('scroll', infiniteScroll)
+    }
+
+    return () => {
+      window.removeEventListener('scroll', infiniteScroll)
+    }
+  },[locationPath])
+
   //rerenders the component when changing movie while in movies component
   useEffect(() =>{
-    getMovies()
+    if(!props.infiniteScroll){
+      getMovies()
+    }
   },[props.movie,section,props.params]);
 
   useEffect(() => {
     refCardsContainer.current.scrollLeft = 0;
   },[movies]);
+
 
   //sets the content delimiter elements to display or not based on if there is or not content left on each side of the carousel
   function scrollAvailable(){
@@ -161,7 +227,7 @@ export default function Carousel({
 	  {movies &&
 	    movies.map((movie) => {
 	      return <Card 
-		       key={movie.id}
+		       key={keyGenerator()}
 		       id={movie.id}
 		       width={width}
 		       src={width === 'poster' ? movie.poster_path : movie.backdrop_path }
@@ -171,7 +237,7 @@ export default function Carousel({
 	    })
 	  }
           {
-	    !movies && loadingSkeleton(width)
+	    (!movies || movies.length === 0) && loadingSkeleton(width)
 	  }
 	</div>
       </div>

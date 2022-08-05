@@ -14,6 +14,10 @@ export default function PageTrending(){
 	      width={'poster'} 
 	      section='Trending' 
 	      displayGrid={true}
+              params={{
+	        'page': null
+	      }}
+              infiniteScroll={true}
 	    />
 	    <ArrowButton 
 	      onClick={goTop} 

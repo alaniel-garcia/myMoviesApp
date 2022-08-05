@@ -16,7 +16,12 @@ export default function PageSimilar(){
 	      endpoint={`/movie/${id}/similar`} 
 	      section={'Similar'}
 	      displayGrid={true}
-	      id={id}/>
+	      id={id}
+              params={{
+		'page': null
+	      }}
+              infiniteScroll={true}
+	    />
 	    <ArrowButton 
 	      onClick={goTop} 
 	      functionality={'go-top'}/>

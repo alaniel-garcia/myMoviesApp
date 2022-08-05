@@ -18,8 +18,10 @@ export default function Search(){
       section={query}
       displayGrid={true}
       params={{
-	query: query
+	query: query,
+	page: null
       }}
+      infiniteScroll={true}
     />
     <ArrowButton 
       onClick={goTop} 

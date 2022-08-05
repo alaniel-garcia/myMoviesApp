@@ -14,6 +14,10 @@ export default function PageDiscover(){
 	      width={'poster'} 
 	      section='Discover' 
 	      displayGrid={true}
+              infiniteScroll={true}
+              params={
+		{page: null}
+	      }
 	    />
 	    <ArrowButton 
 	      onClick={goTop} 

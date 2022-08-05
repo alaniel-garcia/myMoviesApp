@@ -6,10 +6,6 @@ function goTop(){
   })
 }
 
-
-
-
-
 export {
   goTop,
 }

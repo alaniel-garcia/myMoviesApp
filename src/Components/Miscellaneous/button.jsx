@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Button.scss';
 import colors from '../../index.scss'
 
@@ -10,6 +10,7 @@ export default function Button({
 
   const [icon, setIcon] = useState({});
   const [style, setStyle] = useState({background: `${colors.secondaryGrey}`});
+  const didMount = useRef(true);
 
 
   let rotate;
@@ -37,10 +38,19 @@ export default function Button({
 	return {background: colors.secondaryGrey}
       }
     })
-    //conditional that is provided by categories component, and changes its style according 
-    //to the state in the respective component
-    if(props.genreReader){
-      props.genreReader()
+  },[active]);
+
+
+  //the genreReader function used here is for changing the style of the buttons on categories component according to its needs
+  //ps:learning the use of useRef() to execute code only when updates
+  useEffect(() => {
+    if(didMount.current){
+      didMount.current = false;
+    }
+    else{
+      if(props.genreReader){
+	props.genreReader()
+      }
     }
   },[active]);
 

@@ -63,7 +63,9 @@ export default function Card({
       </h2>
       <div className='details-container'>
 	<div className='details__release'>
-          <span>{release.slice(0,4)}</span>
+          <span>{
+	    release && release.slice(0,4)
+	  }</span>
         </div>
         <div className='details__button'>
           <Link className='Link' to={`/Movie/${id}`}>

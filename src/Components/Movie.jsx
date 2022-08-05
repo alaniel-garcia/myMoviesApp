@@ -34,9 +34,7 @@ export default function Movie({API}){
 
     if(status !== 200){
       console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
-    }else{
     }
-    console.log(movie)
   }
 
   useEffect(() => {

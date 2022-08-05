@@ -10,20 +10,29 @@ export default function PageCategories(){
   const location = useLocation();
   const params = location.state ? location.state.params : '';
 
-
   return  <div className='Page-padded'>
             <Nav />
 	    <div className='PageCategories'>
-	      <Categories 
-		API={API} 
-		endpoint={API_EP_GENRES} 
-		section={'Categories'} 
-		pageCategories={true}
-		state={params}
-	      />
+              {
+		params && (
+		  <Categories 
+		    API={API} 
+		    endpoint={API_EP_GENRES} 
+		    section={'Categories'} 
+		    pageCategories={true}
+		    state={params}
+		    infiniteScroll={true}
+		  />
+		)
+	      }
 	    </div>
 	    <ArrowButton 
-	      onClick={goTop} 
+	      onClick={() => {
+		goTop()
+	      }} 
 	      functionality={'go-top'}/>
 	  </div>
 }
+
+
+

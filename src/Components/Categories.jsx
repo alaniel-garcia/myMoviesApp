@@ -1,6 +1,6 @@
 import './Categories.scss';
 import arrow from '../Assets/icons/arrow.svg';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Carousel from './Carousel';
 import Button from './Miscellaneous/Button';
 import {API_EP_DISCOVER} from '../Api/API';
@@ -15,17 +15,20 @@ export default function Categories({
   const [genres,setGenres] = useState({All: {id: '00', current: true}}); 
   const [paramsToSend, setParamsToSend] = useState([]);
   const navigate = useNavigate();
+  const didMount = useRef(true)
+  const locationPath = window.location.pathname;
+
 
   async function getGenres(){
     const {data, status} = await API(`${endpoint}`);
+    let aux = {...genres};
+     await data.genres.map(genre => {
+	    aux = {...aux, [genre.name]: {id: genre.id, current: false}}
+      })
 
-    data.genres.map(genre => {
-      setGenres(
-	(prevState) => {
-	  return {...prevState, [genre.name]: {id: genre.id, current: false}}
-	}
-      )
-    })
+    if(Object.entries(aux).length !== Object.entries(genres).length){
+      setGenres(aux)
+    }
 
     if(status !== 200){
       console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
@@ -46,6 +49,11 @@ export default function Categories({
   useEffect(()=>{
     getGenres();
   },[]);
+
+  useEffect(()=>{
+    genresStateReading()
+  },[locationPath]);
+
 
   function genreSelectHandler(event) {
     //event.stopPropagation();
@@ -69,8 +77,6 @@ export default function Categories({
 	...prevState, [genreToSet]: {...prevState[genreToSet], current: !prevState[genreToSet].current}  
       }))
     }
-
-
   }
 
   //function that reads the state of every genre in order to set All genres in case there's no specific
@@ -78,7 +84,6 @@ export default function Categories({
   function genresStateReading(){
     const genresStateReader = Object.entries(genres);
     genresStateReader.shift();
-
     if(genresStateReader.some( gen => gen[1].current === true)){
       setGenres(prevState => {
 	return {...prevState, All: {...prevState['All'], current: false}}
@@ -146,8 +151,13 @@ export default function Categories({
   },[genres]);
 
   useEffect(() => {
-    if(props.pageCategories){
-      navigateToCategories()
+    if(didMount.current){
+      didMount.current = false
+    }
+    else{
+      if(props.pageCategories){
+	navigateToCategories()
+      }
     }
   },[paramsToSend]);
 
@@ -166,6 +176,7 @@ export default function Categories({
       </div>
       <div className='Genres__container'>
       {
+	genres && (
 	Object.keys(genres)
 	  .map((gen, i) => 
 	    <Button 
@@ -177,22 +188,28 @@ export default function Categories({
 	      }}
 	      genreReader={genresStateReading}
 	    />)
+	)
       }
       </div>
       <div className='Genres__movies-container'>
-	<Carousel 
-	  API={API} 
-	  endpoint={API_EP_DISCOVER}
-	  width={props.pageCategories ? 'poster' : 'large'} 
-	  notShowButton={true}
-          displayGrid={props.pageCategories ? true : false}
-          params={ genres.All.current 
-	    ? {}
-	    : {
-	      with_genres: getParams('API_PARAMS') 
-	    }
-	  }
-	/>
+        {
+	  genres &&(
+	    <Carousel 
+	      API={API} 
+	      endpoint={API_EP_DISCOVER}
+	      width={props.pageCategories ? 'poster' : 'large'} 
+	      notShowButton={true}
+	      displayGrid={props.pageCategories ? true : false}
+	      params={ !genres.All.current 
+		? {
+		  with_genres: getParams('API_PARAMS') 
+		}
+		: {page: null}
+	      }
+	      infiniteScroll={props.infiniteScroll ? true : false}
+	    />
+	  )
+	}
       </div>
     </article>
   )
