@@ -16,7 +16,10 @@ export default function Card({
 }) {
   const style = {
     borderRadius: '.6rem',
-    boxShadow: '.2rem .2rem 1.6rem black'
+    boxShadow: '.2rem .2rem 1.6rem black',
+    paddingInline: '.8rem',
+    background: '#232323',
+    color: 'white'
   }
 
   const imgSize = width === 'poster' ? 'w200' : 'w300';
@@ -51,7 +54,7 @@ export default function Card({
 	  :
 	  <div 
 	    className='card__movie-no-img'
-            style={width === 'poster' ? style : null}>
+            style={style}>
 	    <h2 
 	      className='movie-no-img__title'
 	      style={width !== 'poster' ? {display: 'none'} : null }>

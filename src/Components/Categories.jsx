@@ -13,7 +13,7 @@ export default function Categories({
   ...props
 }){
   const [genres,setGenres] = useState({All: {id: '00', current: true}}); 
-  const [paramsToSend, setParamsToSend] = useState([]);
+  const [paramsToSend, setParamsToSend] = useState();
   const navigate = useNavigate();
   const didMount = useRef(true)
   const locationPath = window.location.pathname;
@@ -51,7 +51,7 @@ export default function Categories({
   },[]);
 
   useEffect(()=>{
-    genresStateReading()
+      genresStateReading()
   },[locationPath]);
 
 
@@ -127,16 +127,43 @@ export default function Categories({
       return genresFilteredName
     }
     else{
-      setParamsToSend(genresFiltered)
+      //this piece of code asures this function doesn't 
+      //change the state at least it is necessary,
+      //which solved a lot of problems about several rerenders of Carousel component
+      if(!paramsToSend){
+	setParamsToSend(genresFiltered)
+      }
+      else{
+	const aux = paramsToSend;
+	let areEqual;
+	if(aux.length !== genresFiltered.length){
+	  areEqual = false;
+	}
+	else{
+	  areEqual = aux.every( (gen, i) => {
+	    if (gen[0] === genresFiltered[i][0]){
+	      return true
+	    }
+	    else{
+	      return false
+	    }
+	  });
+	}
+
+	if(areEqual === false){
+	  setParamsToSend(genresFiltered)
+	}
+      }
     }
 
   }
 
   function navigateToCategories(){
-
-    let gnres = paramsToSend.flatMap(gen => gen)
-    
-    if(gnres.length === 0){
+    let gnres;
+    if(paramsToSend?.length > 0){
+      gnres = paramsToSend.flatMap(gen => gen)
+    }
+    else{
       gnres = ['all']
     }
     navigate(`/Categories/genres=${gnres.join('-')}`,{
@@ -147,7 +174,12 @@ export default function Categories({
   }
 
   useEffect(() => {
-    getParams()
+    if(didMount.current){
+      didMount.current = false
+    }
+    else{
+      getParams()
+    }
   },[genres]);
 
   useEffect(() => {
@@ -193,19 +225,19 @@ export default function Categories({
       </div>
       <div className='Genres__movies-container'>
         {
-	  genres &&(
+	  paramsToSend && (
 	    <Carousel 
 	      API={API} 
 	      endpoint={API_EP_DISCOVER}
 	      width={props.pageCategories ? 'poster' : 'large'} 
 	      notShowButton={true}
 	      displayGrid={props.pageCategories ? true : false}
-	      params={ !genres.All.current 
-		? {
+	      params={ 
+		{
 		  with_genres: getParams('API_PARAMS') 
 		}
-		: {page: null}
 	      }
+	      paramsToSend={paramsToSend}
 	      infiniteScroll={props.infiniteScroll ? true : false}
 	    />
 	  )

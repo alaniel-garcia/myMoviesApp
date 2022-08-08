@@ -69,8 +69,8 @@ export default function Carousel({
   const refContentOnLeft = useRef();
   const refContentOnRight = useRef();
   const background= props.movie ? colors.white : colors.mainBg;
-  const locationPath = window.location.pathname;
   let page = 1;
+  const didMount = useRef(true);
 
   let infiniteScroll = () =>{
     const endOfPage = window.innerHeight + window.pageYOffset >= (document.body.offsetHeight - window.innerHeight);
@@ -85,23 +85,22 @@ export default function Carousel({
     }
   };
 
-
   /*
    * this function takes props.params which sets aditional parameters to the API call
    * in case the parent component of Carousel needs it
   */
   async function getMovies(){
 
-    const {data, status} = await API(`${endpoint}`,{
-      params: props.params ? props.params : {}
-    })
- 
 
-    setMovies(data.results)
+      const {data, status} = await API(`${endpoint}`,{
+	params: props.params ? props.params : {}
+      })
+      
+      setMovies(data.results)
 
-    if(status !== 200){
-      console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
-    }
+      if(status !== 200){
+	console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
+      }
   }
 
 
@@ -109,7 +108,6 @@ export default function Carousel({
     try{
         page++;
 	props.params['page'] = page;
-
 	const {data, status} = await API(`${endpoint}`,{
 	  params: props.params 
 	})
@@ -134,23 +132,46 @@ export default function Carousel({
   // sets an infinite scroll  event listener when mounting and removes it when unmounting component
   // Also reset the movie page and calls API when locationPath changes
   useEffect(() => {
-    page = 1
-    getMovies()
     if(props.infiniteScroll){
       window.addEventListener('scroll', infiniteScroll)
     }
+    getMovies()
 
     return () => {
       window.removeEventListener('scroll', infiniteScroll)
     }
-  },[locationPath])
+  },[])
+
 
   //rerenders the component when changing movie while in movies component
   useEffect(() =>{
-    if(!props.infiniteScroll){
-      getMovies()
+    if(didMount.current){
+      didMount.current = false
     }
-  },[props.movie,section,props.params]);
+    else{
+      if(!props.infiniteScroll){
+	getMovies()
+      }
+    }
+  },[props.movie,section]);
+
+  //renders the new movies when different categories selected
+  //it asures that the API is only called when necessary
+  useEffect(() => {
+    if(didMount.current){
+      didMount.current = false
+    }
+    else{
+      if(!section && props.paramsToSend.length > 0 && props.params){
+	page = 1
+	getMovies()
+      }
+      else if(!section && movies?.length > 0 ){
+	page = 1
+	getMovies()
+      }
+    }
+  },[props.paramsToSend]);
 
   useEffect(() => {
     refCardsContainer.current.scrollLeft = 0;
@@ -237,7 +258,14 @@ export default function Carousel({
 	    })
 	  }
           {
-	    (!movies || movies.length === 0) && loadingSkeleton(width)
+	    !movies && loadingSkeleton()
+	  }
+          {
+	    movies?.length === 0 && (
+	      <div className='no-coincidence'>
+	        <h1>No coincidence</h1>
+	      </div>
+	    )
 	  }
 	</div>
       </div>

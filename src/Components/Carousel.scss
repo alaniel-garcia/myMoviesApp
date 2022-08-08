@@ -70,3 +70,14 @@
     gap: 1.2rem;
 }
 
+.no-coincidence {
+  display: grid;
+    place-content: center;
+
+  width: 100%;
+    min-height: 13.9rem;
+
+  background-color: transparent;
+  color: idx.$secondary-grey;
+
+}
