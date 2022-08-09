@@ -13,8 +13,6 @@ export default function PageCategories(){
   return  <div className='Page-padded'>
             <Nav />
 	    <div className='PageCategories'>
-              {
-		params && (
 		  <Categories 
 		    API={API} 
 		    endpoint={API_EP_GENRES} 
@@ -23,8 +21,6 @@ export default function PageCategories(){
 		    state={params}
 		    infiniteScroll={true}
 		  />
-		)
-	      }
 	    </div>
 	    <ArrowButton 
 	      onClick={() => {

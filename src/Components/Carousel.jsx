@@ -91,6 +91,7 @@ export default function Carousel({
   */
   async function getMovies(){
 
+    console.log('se usó get movies')
 
       const {data, status} = await API(`${endpoint}`,{
 	params: props.params ? props.params : {}
@@ -112,9 +113,9 @@ export default function Carousel({
 	  params: props.params 
 	})
 
-	setMovies((prevState = []) => {
-	  return [...prevState,...data.results]
-	})
+	  setMovies((prevState) => {
+	    return [...prevState,...data.results]
+	  })
 
 	if(status !== 200){
 	  console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
@@ -132,14 +133,7 @@ export default function Carousel({
   // sets an infinite scroll  event listener when mounting and removes it when unmounting component
   // Also reset the movie page and calls API when locationPath changes
   useEffect(() => {
-    if(props.infiniteScroll){
-      window.addEventListener('scroll', infiniteScroll)
-    }
     getMovies()
-
-    return () => {
-      window.removeEventListener('scroll', infiniteScroll)
-    }
   },[])
 
 
@@ -172,6 +166,24 @@ export default function Carousel({
       }
     }
   },[props.paramsToSend]);
+
+  //loads a new page of movies when infiniteScroll is required 
+  useEffect(() => {
+
+    if(didMount.current){
+      didMount.current = false
+    }
+    else{
+      if(props.infiniteScroll && props.params){
+	window.addEventListener('scroll', infiniteScroll)
+      }
+    }
+
+    return () => {
+      window.removeEventListener('scroll', infiniteScroll)
+    }
+
+  },[props.params]);
 
   useEffect(() => {
     refCardsContainer.current.scrollLeft = 0;
