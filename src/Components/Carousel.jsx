@@ -70,6 +70,7 @@ export default function Carousel({
   const refContentOnRight = useRef();
   const background= props.movie ? colors.white : colors.mainBg;
   let page = 1;
+  let maxPage = false;
   const didMount = useRef(true);
 
   let infiniteScroll = () =>{
@@ -93,45 +94,56 @@ export default function Carousel({
 
     console.log('se usó get movies')
 
-      const {data, status} = await API(`${endpoint}`,{
-	params: props.params ? props.params : {}
-      })
-      
-      setMovies(data.results)
+    const {data, status} = await API(`${endpoint}`,{
+      params: props.params ? props.params : {}
+    })
+    
+    setMovies(data.results)
 
-      if(status !== 200){
-	console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
-      }
+    if(props.infiniteScroll && !maxPage){
+      maxPage = data.total_pages;
+    }
+
+   
+
+    if(status !== 200){
+      console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
+    }
   }
 
 
   async function getPaginatedMovies(){
     try{
-        page++;
-	props.params['page'] = page;
-	const {data, status} = await API(`${endpoint}`,{
-	  params: props.params 
-	})
+        if(!maxPage){
+
+	  page++;
+	  props.params['page'] = page;
+	  const {data, status} = await API(`${endpoint}`,{
+	    params: props.params 
+	  })
+	  if(data.results.length === 0){
+	    maxPage = true;
+	  }
 
 	  setMovies((prevState) => {
 	    return [...prevState,...data.results]
 	  })
 
-	if(status !== 200){
-	  console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
-	}
+	  if(status !== 200){
+	    console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
+	  }
 
+	}
+        else{
+	  return
+	}
     }
     catch(error){
       console.log(error)
     }
-
-
   }
 
 
-  // sets an infinite scroll  event listener when mounting and removes it when unmounting component
-  // Also reset the movie page and calls API when locationPath changes
   useEffect(() => {
     getMovies()
   },[])
@@ -184,6 +196,7 @@ export default function Carousel({
     }
 
   },[props.params]);
+
 
   useEffect(() => {
     refCardsContainer.current.scrollLeft = 0;
