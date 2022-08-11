@@ -5,6 +5,7 @@ import Carousel from './Carousel';
 import Button from './Miscellaneous/Button';
 import {API_EP_DISCOVER} from '../Api/API';
 import {useNavigate} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function Categories({
   API,
@@ -12,23 +13,27 @@ export default function Categories({
   section,
   ...props
 }){
-  const [genres,setGenres] = useState({All: {id: '00', current: true}}); 
+  const [t] = useTranslation('global')
+  const [genres,setGenres] = useState({[`${t('lang.all')}`]: {id: '00', current: true}}); 
   const [paramsToSend, setParamsToSend] = useState();
   const navigate = useNavigate();
   const didMount = useRef(true)
   const locationPath = window.location.pathname;
 
 
-  async function getGenres(){
-    const {data, status} = await API(`${endpoint}`);
-    let aux = {...genres};
+  async function getGenres(changingLang = false){
+    const {data, status} = await API(`${endpoint}`, {params: {language: `${t('lang.langAPI')}`}});
+
+    if(changingLang){
+      setGenres({[`${t('lang.all')}`]: {id: '00', current: true}})
+    }
+    
      await data.genres.map(genre => {
-	    aux = {...aux, [genre.name]: {id: genre.id, current: false}}
+       setGenres(prevState => {
+	 return {...prevState, [genre.name]: {id: genre.id, current: false}}
+       })
       })
 
-    if(Object.entries(aux).length !== Object.entries(genres).length){
-      setGenres(aux)
-    }
 
     if(status !== 200){
       console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
@@ -50,8 +55,19 @@ export default function Categories({
     getGenres();
   },[]);
 
+  useEffect(() => {
+    if(didMount.current){
+      didMount.current = false;
+    }
+    else{
+      if(genres){
+	getGenres(true)
+      }
+    }
+  },[t('lang.langAPI')]);
+
   useEffect(()=>{
-      genresStateReading()
+    genresStateReading()
   },[locationPath]);
 
 
@@ -60,7 +76,7 @@ export default function Categories({
     const genreToSet = event.target.innerText;
 
     /* set selected genre current status to true/false mantaining prevState by using spread operator */
-    if(genreToSet === 'All'){
+    if(genreToSet === (`${t('lang.all')}`)){
       const genresStateReader = Object.keys(genres);
       genresStateReader.shift();
       
@@ -86,12 +102,12 @@ export default function Categories({
     genresStateReader.shift();
     if(genresStateReader.some( gen => gen[1].current === true)){
       setGenres(prevState => {
-	return {...prevState, All: {...prevState['All'], current: false}}
+	return {...prevState, [`${t('lang.all')}`]: {...prevState[`${t('lang.all')}`], current: false}}
       })
     }
-    else {
+    else{
       setGenres(prevState => {
-	return {...prevState, All: {...prevState['All'], current: true}}
+	return {...prevState, [`${t('lang.all')}`]: {...prevState[`${t('lang.all')}`], current: true}}
       })
     }
   }
@@ -164,9 +180,11 @@ export default function Categories({
       gnres = paramsToSend.flatMap(gen => gen)
     }
     else{
-      gnres = ['all']
+      gnres = [`${t('lang.allGen')}`]
     }
-    navigate(`/Categories/genres=${gnres.join('-')}`,{
+    navigate(
+      `/${t('lang.categoriesPath')}/${t('lang.genres')}=${gnres.join('-')}`
+      ,{
       state: {
 	params: getParams('PageCategories'),
       }
@@ -199,7 +217,7 @@ export default function Categories({
         <h1>{section}</h1>
 	<div onClick={navigateToCategories} className='Genres__button'>
 	  <Button
-	    text='Complete view'
+	    text={`${t('lang.completeView')}`}
 	    icon={true}
 	    src={arrow}
 	    rotate={'-90deg'}

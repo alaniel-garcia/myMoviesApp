@@ -2,8 +2,9 @@ import './MovieInfo.scss';
 import '../Skeleton.scss';
 import Carousel from './Carousel';
 import Skeleton from '@mui/material/Skeleton';
-import {API} from '../Api/API.js';
+import { API } from '../Api/API.js';
 import { Fragment } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function secondsToHm(min) {
     const h = Math.floor(min / 60);
@@ -35,6 +36,7 @@ export default function MovieInfo({
   src,
 }){
 
+  const [t] = useTranslation('global')
   const id = movie.info.id;
 
 
@@ -66,7 +68,7 @@ export default function MovieInfo({
 	      <h2 className='info-rate__tagline'>{movie.info.tagline}</h2>
 	    </div>
 	    <div className='Movie__info-overview'>
-	      <h2>Overview</h2>
+	      <h2>{`${t('lang.overview')}`}</h2>
 	      <p>
 		{movie.info.overview}
 	      </p>

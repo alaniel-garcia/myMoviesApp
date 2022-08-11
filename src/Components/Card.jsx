@@ -3,6 +3,7 @@ import arrow from '../Assets/icons/arrow.svg';
 import Button from './Miscellaneous/Button';
 import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -14,6 +15,9 @@ export default function Card({
   release,
   ...props
 }) {
+
+  const [t] = useTranslation('global')
+
   const style = {
     borderRadius: '.6rem',
     boxShadow: '.2rem .2rem 1.6rem black',
@@ -71,9 +75,11 @@ export default function Card({
 	  }</span>
         </div>
         <div className='details__button'>
-          <Link className='Link' to={`/Movie/${id}`}>
+          <Link 
+            className='Link' 
+            to={`/${t('lang.movie')}/${id}`}>
 	    <Button 
-	      text='Details'
+	      text={ `${t('lang.details')}`}
 	      icon={true}
 	      src={arrow}
 	      rotate={'-90deg'}

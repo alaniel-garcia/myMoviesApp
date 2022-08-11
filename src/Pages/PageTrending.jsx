@@ -3,8 +3,12 @@ import Carousel from '../Components/Carousel';
 import ArrowButton from '../Components/Miscellaneous/ArrowButton';
 import {API, API_EP_TRENDING} from '../Api/API';
 import {goTop} from './pagesSharedFunctionalities';
+import {lang} from '../languages';
+import { useTranslation } from 'react-i18next';
 
 export default function PageTrending(){
+
+  const [t] = useTranslation('global')
 
   return  <div className='Page-padded'>
 	    <Nav />
@@ -12,7 +16,7 @@ export default function PageTrending(){
 	      API={API} 
 	      endpoint={API_EP_TRENDING}
 	      width={'poster'} 
-	      section='Trending' 
+	      section={`${t('lang.trending')}`} 
 	      displayGrid={true}
               params={{
 	        'page': null

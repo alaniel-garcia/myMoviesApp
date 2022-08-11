@@ -8,8 +8,12 @@ import {
 import Carousel from './Components/Carousel';
 import Categories from './Components/Categories';
 import Nav from './Components/Nav';
+import { useTranslation } from 'react-i18next';
 
 function App() {
+
+  const [t] = useTranslation('global')
+
   return (
     <div className="App">
       <header>
@@ -20,18 +24,18 @@ function App() {
           API={API} 
           endpoint={API_EP_TRENDING}
           width={'large'} 
-          section='Trending' 
+          section={`${t('lang.trending')}`}
         />
         <Carousel
           API ={API}
           endpoint={API_EP_DISCOVER}
           width={'poster'} 
-          section='Discover' 
+          section={`${t('lang.discover')}`}
         />
         <Categories 
           API ={API}
           endpoint={API_EP_GENRES}
-          section='Categories'
+          section={`${t('lang.categories')}`}
         />
     {/*<Carousel
           API ={API}

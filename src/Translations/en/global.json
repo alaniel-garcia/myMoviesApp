@@ -1,0 +1,23 @@
+{
+  "lang":{
+    "langAPI": "en",
+    "trending": "Trending",
+    "discover": "Discover",
+    "movie": "Movie",
+    "search": "Search",
+    "searchPath": "Search", 
+    "categories": "Categories",
+    "categoriesPath": "Categories",
+    "all": "All",
+    "allGen": "all",
+    "genres": "genres",
+    "viewAll": "View all",
+    "completeView": "Complete view",
+    "noCoincidence": "No coincidence",
+    "home": "Home",
+    "overview": "Overview",
+    "details": "Details",
+    "similar": "Similar",
+    "language": "Language"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "lang":{
+    "langAPI": "es",
+    "trending": "Tendencias",
+    "discover": "Descubrir",
+    "movie": "Pelicula",
+    "search": "Búsqueda",
+    "searchPath": "Busqueda", 
+    "categories": "Categorías",
+    "categoriesPath": "Categorias",
+    "all": "Todas",
+    "allGen": "todos",
+    "genres": "generos",
+    "viewAll": "Ver todas",
+    "completeView": "Vista completa",
+    "noCoincidence": "No hay coincidencias",
+    "home": "Inicio",
+    "overview": "Sinopsis",
+    "details": "Detalles",
+    "similar": "Similar",
+    "language": "Idioma"
+  }
+}

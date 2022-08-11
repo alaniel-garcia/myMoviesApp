@@ -11,21 +11,21 @@ export default function Search(){
   query = query[0].toUpperCase() + query.slice(1);
   return(
     <Fragment>
-    <Carousel 
-      API={API}
-      width={'poster'}
-      endpoint={API_EP_SEARCH}
-      section={query}
-      displayGrid={true}
-      params={{
-	query: query,
-	page: null
-      }}
-      infiniteScroll={true}
-    />
-    <ArrowButton 
-      onClick={goTop} 
-      functionality={'go-top'}/>
+      <Carousel 
+	API={API}
+	width={'poster'}
+	endpoint={API_EP_SEARCH}
+	section={query}
+	displayGrid={true}
+	params={{
+	  query: query,
+	  page: null
+	}}
+	infiniteScroll={true}
+      />
+      <ArrowButton 
+	onClick={goTop} 
+	functionality={'go-top'}/>
     </Fragment>
   )
 

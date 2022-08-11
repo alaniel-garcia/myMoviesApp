@@ -1,6 +1,10 @@
 import Nav from '../Components/Nav';
+import { useTranslation } from 'react-i18next';
+import {lang} from '../languages';
 
 export default function PageSearch(){
+
+  const [t] = useTranslation('global')
 
   return  <div className='Page-padded'>  
             <Nav />
@@ -8,7 +12,7 @@ export default function PageSearch(){
               style={
 		{marginBlockStart: '2.4rem'}
 	      }>
-              Search
+		{`${t('lang.search')}`}
             </h1>
           </div>
 }

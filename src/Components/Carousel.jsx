@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import colors from '../index.scss';
 import Skeleton from '@mui/material/Skeleton';
 import {v4 as keyGenerator } from 'uuid';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -64,6 +65,7 @@ export default function Carousel({
   width,
   ...props
 }) {
+  const [t] = useTranslation('global')
   const [movies, setMovies] = useState();
   const refCardsContainer = useRef();
   const refContentOnLeft = useRef();
@@ -72,6 +74,7 @@ export default function Carousel({
   let page = 1;
   let maxPage = false;
   const didMount = useRef(true);
+
 
   let infiniteScroll = () =>{
     const endOfPage = window.innerHeight + window.pageYOffset >= (document.body.offsetHeight - window.innerHeight);
@@ -94,8 +97,14 @@ export default function Carousel({
 
     console.log('se usó get movies')
 
+    if(props.params){
+      props.params['language'] = `${t('lang.langAPI')}`;
+    }
+
     const {data, status} = await API(`${endpoint}`,{
-      params: props.params ? props.params : {}
+      params: 
+      props.params ? {...props.params, language: `${t('lang.langAPI')}`} 
+      : {language: `${t('lang.langAPI')}`}
     })
     
     setMovies(data.results)
@@ -117,6 +126,7 @@ export default function Carousel({
         if(!maxPage){
 
 	  page++;
+	  props.params['language'] = `${t('lang.langAPI')}`;
 	  props.params['page'] = page;
 	  const {data, status} = await API(`${endpoint}`,{
 	    params: props.params 
@@ -149,6 +159,7 @@ export default function Carousel({
   },[])
 
 
+
   //rerenders the component when changing movie while in movies component
   useEffect(() =>{
     if(didMount.current){
@@ -159,7 +170,7 @@ export default function Carousel({
 	getMovies()
       }
     }
-  },[props.movie,section]);
+  },[props.movie,section,t('lang.langAPI')]);
 
   //renders the new movies when different categories selected
   //it asures that the API is only called when necessary
@@ -221,7 +232,6 @@ export default function Carousel({
     }
   }
 
-
   return(
     <article className='Carousel'>
       <div className='Carousel__header'>
@@ -237,7 +247,7 @@ export default function Carousel({
 		: 'Carousel__show-more-button'}
 	  >
 	    <Button
-	      text='View all'
+	      text={`${t('lang.viewAll')}`}
 	      icon={true}
 	      src={arrow}
 	      rotate={'-90deg'}
@@ -277,7 +287,7 @@ export default function Carousel({
 		       id={movie.id}
 		       width={width}
 		       src={width === 'poster' ? movie.poster_path : movie.backdrop_path }
-		       title={movie.original_title}
+		       title={movie.title}
 		       release={movie.release_date}
 		     />
 	    })
@@ -288,7 +298,7 @@ export default function Carousel({
           {
 	    movies?.length === 0 && (
 	      <div className='no-coincidence'>
-	        <h1>No coincidence</h1>
+	        <h1>{`${t('lang.noCoincidence')}`}</h1>
 	      </div>
 	    )
 	  }

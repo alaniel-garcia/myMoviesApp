@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import ColorThief from 'colorthief';
 import MovieInfo from './MovieInfo';
 import Nav from './Nav';
+import { useTranslation } from 'react-i18next';
 
 
 export default function Movie({API}){
@@ -17,6 +18,7 @@ export default function Movie({API}){
     }
   });
 
+  const [t] = useTranslation('global')
   const src = `https://image.tmdb.org/t/p/w500${movie.info.poster_path}`;
   const refImg = useRef();
   const refBackgroundImgCover = useRef();
@@ -24,7 +26,7 @@ export default function Movie({API}){
   
 
   async function getMovie(){
-    const {data, status} = await API(`/movie/${id}`);
+    const {data, status} = await API(`/movie/${id}`,{ params: {language: `${t('lang.langAPI')}`}});
 
       setMovie( prevState => {
 	return {...prevState, info: data}

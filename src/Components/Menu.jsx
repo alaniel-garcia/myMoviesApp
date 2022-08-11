@@ -1,6 +1,8 @@
 import './Menu.scss';
 import {Link} from 'react-router-dom';
 import { useEffect, useRef } from 'react';
+import TestList from './Miscellaneous/TestList';
+import { useTranslation } from 'react-i18next';
 
 
 export default function Menu({
@@ -8,6 +10,7 @@ export default function Menu({
   menuOnClickOutside,
 }){
 
+  const [t] = useTranslation('global')
   const refMenu = useRef();
 
 
@@ -20,13 +23,26 @@ export default function Menu({
 	   && refMenu.current !== e.target 
 	   && !e.target?.classList?.contains('HamburguerMenu') 
 	   && !e.target?.classList?.contains('HamburguerMenu-bars-wrapper') 
-	   && !e.target.classList.contains('HamburguerMenu-bar')
-	   && !e.target.classList.contains('Menu__link')
+	   && !e.target?.classList.contains('HamburguerMenu-bar')
+	   && !e.target?.classList.contains('Menu__link')
+	   //elements of ListItems from Material UI
+	   && !e.target?.classList.contains('Menu__language')
+	   && !e.target?.classList.contains('css-cveggr-MuiListItemIcon-root')
+	   && !e.target?.classList.contains('MuiListItemText-root')
+	   && !e.target?.classList.contains('css-tlelie-MuiListItemText-root')
+	   && !e.target?.classList.contains('MuiListItemButton-gutters')
+	   && !e.target?.classList.contains('css-16ac5r2-MuiButtonBase-root-MuiListItemButton-root')
+	   //elements of icons from Material UI
+	   && !e.target?.classList.contains('MuiSvgIcon-root')
+	   && !e.target?.classList.contains('MuiSvgIcon-fontSizeMedium')
+	   && !e.target?.classList.contains('css-4sxdus-MuiSvgIcon-root')
+	   && !e.target?.attributes['d']
       ){
 	//setTimeOut used to not overlap the onClick function
 	//of hamburguerMenu and the false state can be set after the changes of states by the respective onClick function
 	setTimeout(() =>{
 	  menuOnClickOutside(false)
+	  console.log('xd')
 	},0);
       }
     }
@@ -42,26 +58,37 @@ export default function Menu({
       </Link>
       <ul className='Menu__ul'>
         <li className='Menu__li'>
-          <Link className='Menu__link' to={'/Search'}>  
-            Search
+          <Link 
+            className='Menu__link' 
+            to={`/${t('lang.searchPath')}`}>  
+	      {`${t('lang.search')}`}
           </Link>
         </li>
         <li className='Menu__li'>
-          <Link className='Menu__link' to={'/Trending'}>  
-	    Trending
+          <Link 
+            className='Menu__link' 
+            to={`/${t('lang.trending')}`}>  
+	      {`${t('lang.trending')}`}
           </Link>
         </li>
         <li className='Menu__li'>
-          <Link className='Menu__link' to={'/Discover'}>  
-	    Discover
+          <Link 
+            className='Menu__link' 
+            to={`/${t('lang.discover')}`}>  
+	      {`${t('lang.discover')}`}
           </Link>
         </li>
         <li className='Menu__li'>
-          <Link className='Menu__link' to={'/Categories'}>  
-	    Categories
+          <Link 
+            className='Menu__link' 
+            to={`/${t('lang.categoriesPath')}`}>  
+	      {`${t('lang.categories')}`}
           </Link>
         </li>
       </ul>
+      <div className='Menu__language'>
+	<TestList/>
+      </div>
     </div>
   )
 }

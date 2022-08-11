@@ -3,8 +3,11 @@ import Carousel from '../Components/Carousel';
 import {API, API_EP_DISCOVER} from '../Api/API';
 import {goTop} from './pagesSharedFunctionalities';
 import ArrowButton from '../Components/Miscellaneous/ArrowButton';
+import { useTranslation } from 'react-i18next';
 
 export default function PageDiscover(){
+
+  const [t] = useTranslation('global')
 
   return  <div className='Page-padded'>
 	    <Nav />
@@ -12,7 +15,7 @@ export default function PageDiscover(){
 	      API={API} 
 	      endpoint={API_EP_DISCOVER}
 	      width={'poster'} 
-	      section='Discover' 
+	      section={`${t('lang.discover')}`} 
 	      displayGrid={true}
               infiniteScroll={true}
               params={
