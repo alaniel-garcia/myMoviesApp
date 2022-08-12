@@ -18,7 +18,6 @@ export default function Menu({
   //useEffect made for closing the menu when clicking outside 
   useEffect(() => {
     function handleOnClickOutside(e){
-      console.log(e.target)
       //I had to specify every element allowed to be clicked in order to let them trigger their function
       if(refMenu.current?.classList?.contains('Menu--active')  
 	   && refMenu.current !== e.target 
@@ -60,6 +59,13 @@ export default function Menu({
         <h1>My Movies App</h1>
       </Link>
       <ul className='Menu__ul'>
+        <li className='Menu__li'>
+          <Link 
+            className='Menu__link' 
+            to={`/`}>  
+	      {`${t('lang.home')}`}
+          </Link>
+        </li>
         <li className='Menu__li'>
           <Link 
             className='Menu__link' 

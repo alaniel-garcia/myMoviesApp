@@ -38,7 +38,7 @@ export default function Card({
 	  card.target.setAttribute('src', `${API_URL_IMG_LARGE}${src}`)
 	}
       })
-    })
+    },{threshold: [0,1]})
     if(refMovieCardImg.current){
       observer.observe(refMovieCardImg.current)
     }
@@ -77,7 +77,7 @@ export default function Card({
         <div className='details__button'>
           <Link 
             className='Link' 
-            to={`/${t('lang.movie')}/${id}`}>
+            to={`/${t('lang.movie')}/${id}-${title}`}>
 	    <Button 
 	      text={ `${t('lang.details')}`}
 	      icon={true}

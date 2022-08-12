@@ -10,10 +10,18 @@ import globalEs from './Translations/es/global.json';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const myStorage = window.localStorage;
 
+if(!myStorage.getItem('language')){
+  myStorage.setItem('language', `${navigator.language.slice(0,2)}`)
+}
+
+
+
+console.log(myStorage)
 i18next.init({
   interpolation: { escapeValue: false },
-  lng: 'es',
+  lng: myStorage.getItem('language'),
   resources: {
     es: {
       global: globalEs

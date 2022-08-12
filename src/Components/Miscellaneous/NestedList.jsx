@@ -9,6 +9,14 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import './NestedList.scss';
 
+const myStorage = window.localStorage;
+window.addEventListener('storage', handleLStorageChange);
+
+
+function handleLStorageChange(newLang){
+  myStorage.setItem('language', newLang)
+}
+
 export default function TestList () {
   const [open,setOpen] = useState(false);
   const [t, i18n] = useTranslation('global')
@@ -69,6 +77,7 @@ export default function TestList () {
               disableTypography
               onClick={() => {
 		i18n.changeLanguage('en')
+		handleLStorageChange('en')
 		navigate('/')
 	      }}
               primary='en'/>
@@ -80,6 +89,7 @@ export default function TestList () {
               disableTypography
               onClick={() => { 
 		i18n.changeLanguage('es')
+		handleLStorageChange('es')
 		navigate('/')
 	      }}
               primary='es'/>

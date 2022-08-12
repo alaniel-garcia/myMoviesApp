@@ -34,7 +34,7 @@ export default function Root(){
 	  <PageDiscover />
 	}/>
 	<Route 
-	  path={`/${t('lang.movie')}/:id`}
+	  path={`/${t('lang.movie')}/:id-:title`}
 	  element={
 	    <Movie API={API}/>
 	  }/>
