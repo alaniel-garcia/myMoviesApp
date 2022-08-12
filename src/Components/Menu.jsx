@@ -1,7 +1,7 @@
 import './Menu.scss';
 import {Link} from 'react-router-dom';
 import { useEffect, useRef } from 'react';
-import TestList from './Miscellaneous/TestList';
+import NestedList from './Miscellaneous/NestedList';
 import { useTranslation } from 'react-i18next';
 
 
@@ -18,6 +18,7 @@ export default function Menu({
   //useEffect made for closing the menu when clicking outside 
   useEffect(() => {
     function handleOnClickOutside(e){
+      console.log(e.target)
       //I had to specify every element allowed to be clicked in order to let them trigger their function
       if(refMenu.current?.classList?.contains('Menu--active')  
 	   && refMenu.current !== e.target 
@@ -31,6 +32,8 @@ export default function Menu({
 	   && !e.target?.classList.contains('MuiListItemText-root')
 	   && !e.target?.classList.contains('css-tlelie-MuiListItemText-root')
 	   && !e.target?.classList.contains('MuiListItemButton-gutters')
+	   && !e.target?.classList.contains('MuiButtonBase-root')
+	   && !e.target?.classList.contains('MuiButtonBase-root-MuiListItemButton-root')
 	   && !e.target?.classList.contains('css-16ac5r2-MuiButtonBase-root-MuiListItemButton-root')
 	   //elements of icons from Material UI
 	   && !e.target?.classList.contains('MuiSvgIcon-root')
@@ -87,7 +90,7 @@ export default function Menu({
         </li>
       </ul>
       <div className='Menu__language'>
-	<TestList/>
+	<NestedList/>
       </div>
     </div>
   )

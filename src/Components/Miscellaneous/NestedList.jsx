@@ -7,22 +7,45 @@ import { useState } from 'react';
 import { ArrowDropDown } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import './NestedList.scss';
 
 export default function TestList () {
   const [open,setOpen] = useState(false);
   const [t, i18n] = useTranslation('global')
   const navigate = useNavigate(); 
+  const initialMargin = '2.5rem';
+
+  const styles = {
+    ListItemButton: {
+      width: 'fit-content',
+      padding: '0'
+
+    },
+    listItemIcon: {
+      minWidth: 'fit-content',
+    },
+    listItemCollapsedButton: {
+      left: '0',
+      justifyContent: 'flex-end',
+      padding: '0',
+      marginInlineStart: `1.2rem`, 
+    }
+  }
 
 
   return (
     <List disablePadding>
-      <ListItemButton onClick={() => {setOpen(!open)}}>
-	<ListItemIcon>
+      <ListItemButton disableGutters style={styles.ListItemButton} onClick={() => {setOpen(!open)}}>
+        <ListItemText 
+          disableTypography
+          primary={`${t('lang.language')}`} 
+	  />
+	<ListItemIcon sx={styles.listItemIcon}>
           {open ? 
 	    <ArrowDropDown
 	      sx={
 		{color : colors.white,
-		 fontSize: '3.6rem',
+		 fontSize: `${initialMargin}`,
 		 marginInlineStart: '0rem',
 		}
 	      }/>
@@ -30,20 +53,16 @@ export default function TestList () {
 	      <ArrowRightIcon
 		sx={
 		  {color : colors.white,
-		   fontSize: '3.6rem',
+		   fontSize: `${initialMargin}`,
 		   marginInlineStart: '0rem',
 		  }
 		}/>
 	  }
 	</ListItemIcon>
-        <ListItemText 
-          disableTypography
-          primary={`${t('lang.language')}`} 
-	  />
       </ListItemButton>
       <Collapse in={open}>
         <List>
-          <ListItemButton>
+          <ListItemButton disableGutters sx={styles.listItemCollapsedButton}>
             <ListItemIcon>
             </ListItemIcon>
             <ListItemText 
@@ -54,7 +73,7 @@ export default function TestList () {
 	      }}
               primary='en'/>
           </ListItemButton>
-          <ListItemButton>
+          <ListItemButton disableGutters sx={styles.listItemCollapsedButton}>
             <ListItemIcon>
             </ListItemIcon>
             <ListItemText
