@@ -18,7 +18,6 @@ if(!myStorage.getItem('language')){
 
 
 
-console.log(myStorage)
 i18next.init({
   interpolation: { escapeValue: false },
   lng: myStorage.getItem('language'),

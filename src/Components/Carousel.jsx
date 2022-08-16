@@ -72,13 +72,19 @@ export default function Carousel({
   const refContentOnRight = useRef();
   const background= props.movie ? colors.white : colors.mainBg;
   let page = 1;
-  let maxPage = false;
+  let maxPage;
+  const [maxPageForCategories, setMaxPageForCategories] = useState();
   const didMount = useRef(true);
 
 
   let infiniteScroll = () =>{
     const endOfPage = window.innerHeight + window.pageYOffset >= (document.body.offsetHeight - window.innerHeight);
 
+    //removes scroll event when maxPage is reached
+    if(page >= maxPageForCategories || page >= maxPage){
+      window.removeEventListener('scroll', infiniteScroll)
+      return
+    }
 
     if(endOfPage){
       window.removeEventListener('scroll', infiniteScroll)
@@ -109,31 +115,41 @@ export default function Carousel({
     
     setMovies(data.results)
 
-    if(props.infiniteScroll && !maxPage){
-      maxPage = data.total_pages;
-    }
 
-   
+    if(props.infiniteScroll && !section){
+      setMaxPageForCategories(data.total_pages)
+    }
+    else if(props.infiniteScroll && !maxPage){
+     maxPage = data.total_pages
+    }
 
     if(status !== 200){
       console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
     }
+
   }
 
 
   async function getPaginatedMovies(){
     try{
-        if(!maxPage){
+        if((page < maxPage) || (page < maxPageForCategories)){
 
 	  page++;
+	  /*
+	  console.log('page', page)
+	  if(props.infiniteScroll && !section){
+	    console.log('MAXpage', maxPageForCategories)
+	  }
+	  else{
+	    console.log('MAXpage', maxPage)
+	  }
+	  console.log('paramsitos', props.params)
+	  */
 	  props.params['language'] = `${t('lang.langAPI')}`;
 	  props.params['page'] = page;
 	  const {data, status} = await API(`${endpoint}`,{
 	    params: props.params 
 	  })
-	  if(data.results.length === 0){
-	    maxPage = true;
-	  }
 
 	  setMovies((prevState) => {
 	    return [...prevState,...data.results]
@@ -155,9 +171,8 @@ export default function Carousel({
 
 
   useEffect(() => {
-    getMovies()
+     getMovies();
   },[])
-
 
 
   //rerenders the component when changing movie while in movies component
@@ -167,6 +182,9 @@ export default function Carousel({
     }
     else{
       if(!props.infiniteScroll){
+	getMovies()
+      }
+      if(props.infiniteScroll && props.page === `${t('lang.search')}`){
 	getMovies()
       }
     }
@@ -193,11 +211,15 @@ export default function Carousel({
   //loads a new page of movies when infiniteScroll is required 
   useEffect(() => {
 
+    if( props.infiniteScroll && section){
+      window.addEventListener('scroll', infiniteScroll)
+    }
+
     if(didMount.current){
       didMount.current = false
     }
     else{
-      if(props.infiniteScroll && props.params){
+      if(props.infiniteScroll && props.params && !section){
 	window.addEventListener('scroll', infiniteScroll)
       }
     }
@@ -207,6 +229,7 @@ export default function Carousel({
     }
 
   },[props.params]);
+
 
 
   useEffect(() => {

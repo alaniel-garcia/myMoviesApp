@@ -44,7 +44,6 @@ export default function Menu({
 	//of hamburguerMenu and the false state can be set after the changes of states by the respective onClick function
 	setTimeout(() =>{
 	  menuOnClickOutside(false)
-	  console.log('xd')
 	},0);
       }
     }
