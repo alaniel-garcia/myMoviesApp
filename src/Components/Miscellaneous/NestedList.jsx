@@ -26,8 +26,7 @@ export default function TestList () {
   const styles = {
     ListItemButton: {
       width: 'fit-content',
-      padding: '0'
-
+      padding: '0',
     },
     listItemIcon: {
       minWidth: 'fit-content',
@@ -37,7 +36,7 @@ export default function TestList () {
       justifyContent: 'flex-end',
       padding: '0',
       marginInlineStart: `1.2rem`, 
-    }
+    },
   }
 
 
@@ -68,7 +67,7 @@ export default function TestList () {
 	  }
 	</ListItemIcon>
       </ListItemButton>
-      <Collapse in={open}>
+      <Collapse in={open} >
         <List>
           <ListItemButton disableGutters sx={styles.listItemCollapsedButton}>
             <ListItemIcon>

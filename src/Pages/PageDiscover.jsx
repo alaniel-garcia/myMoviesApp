@@ -1,7 +1,7 @@
 import Nav from '../Components/Nav';
 import Carousel from '../Components/Carousel';
 import {API, API_EP_DISCOVER} from '../Api/API';
-import {goTop} from './pagesSharedFunctionalities';
+import {goTop, isTouchDevice} from './pagesSharedFunctionalities';
 import ArrowButton from '../Components/Miscellaneous/ArrowButton';
 import { useTranslation } from 'react-i18next';
 
@@ -22,9 +22,13 @@ export default function PageDiscover(){
 		{page: null}
 	      }
 	    />
-	    <ArrowButton 
-	      onClick={goTop} 
-	      functionality={'go-top'}/>
+            {
+	      isTouchDevice() && (
+		<ArrowButton 
+		  onClick={goTop} 
+		  functionality={'go-top'}/>
+	      )
+	    }
 	  </div>
 
 }

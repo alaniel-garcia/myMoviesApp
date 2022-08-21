@@ -103,13 +103,13 @@ export default function MovieInfo({
 	    </div>
 	  </Fragment>
 	)}
+      </div>
 	  <Carousel 
 	    API={API}
 	    width={'large'}
 	    endpoint={`/movie/${id}/similar`} 
 	    section={'Similar'}
 	    movie={movie}/>
-      </div>
     </div>
   )
 }

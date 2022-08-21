@@ -1,3 +1,4 @@
+@use '../index.scss' as idx;
 
 .Movie {
   position: absolute;
@@ -42,4 +43,12 @@
       height: 100%;
   }
 }
+
+
+//media queries
+@media (min-width: idx.$bp-medium){
+  .background-img, .background-img__cover {
+    display: none;
+  }
+} 
 

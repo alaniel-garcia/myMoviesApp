@@ -3,7 +3,7 @@ import Nav from '../Components/Nav';
 import ArrowButton from '../Components/Miscellaneous/ArrowButton';
 import {API} from '../Api/API';
 import { useParams } from 'react-router-dom';
-import {goTop} from './pagesSharedFunctionalities';
+import {goTop, isTouchDevice} from './pagesSharedFunctionalities';
 import { useTranslation } from 'react-i18next';
 
 export default function PageSimilar(){
@@ -30,8 +30,12 @@ export default function PageSimilar(){
 		/>
 	      )
 	    }
-	    <ArrowButton 
-	      onClick={goTop} 
-	      functionality={'go-top'}/>
+            {
+	      isTouchDevice() && (
+		<ArrowButton 
+		  onClick={goTop} 
+		  functionality={'go-top'}/>
+	      )
+	    }
 	  </div>
 }

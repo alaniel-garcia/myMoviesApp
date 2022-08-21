@@ -1,6 +1,5 @@
 import Nav from '../Components/Nav';
 import { useTranslation } from 'react-i18next';
-import {lang} from '../languages';
 
 export default function PageSearch(){
 

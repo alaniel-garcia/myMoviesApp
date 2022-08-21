@@ -58,8 +58,7 @@
   position: relative;
   display: flex;
     gap: 1.2rem;
-  overflow-x: scroll;
-  overflow-y: visible;
+  overflow-x: auto;
 
   color: idx.$just-white;
 }
@@ -81,3 +80,4 @@
   color: idx.$secondary-grey;
 
 }
+

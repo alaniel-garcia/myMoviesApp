@@ -3,7 +3,7 @@ import ArrowButton from '../Components/Miscellaneous/ArrowButton';
 import {API,API_EP_SEARCH} from '../Api/API';
 import { useParams } from 'react-router-dom';
 import { Fragment } from 'react';
-import {goTop} from '../Pages/pagesSharedFunctionalities';
+import {goTop, isTouchDevice} from '../Pages/pagesSharedFunctionalities';
 import { useTranslation } from 'react-i18next';
 
 export default function Search(){
@@ -26,9 +26,13 @@ export default function Search(){
 	}}
 	infiniteScroll={true}
       />
-      <ArrowButton 
-	onClick={goTop} 
-	functionality={'go-top'}/>
+      {
+	isTouchDevice() && (
+	  <ArrowButton 
+	    onClick={goTop} 
+	    functionality={'go-top'}/>
+	)
+      }
     </Fragment>
   )
 

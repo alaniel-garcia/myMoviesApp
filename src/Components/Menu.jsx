@@ -54,8 +54,8 @@ export default function Menu({
     <div 
       ref={refMenu}
       className={menuState ? `Menu Menu--active` : 'Menu'}>
-      <Link className='Menu__link' to={'/'}>
-        <h1>My Movies App</h1>
+      <Link className='Menu__link Menu_appLogo' to={'/'}>
+        <h1 className='Menu__app-title'>My Movies App</h1>
       </Link>
       <ul className='Menu__ul'>
         <li className='Menu__li'>

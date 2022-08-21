@@ -34,3 +34,16 @@
 
   filter: invert(1);
 }
+
+//media queries 
+@media (min-width: idx.$bp-large) {
+
+  .Button {
+    
+    .Button__text {
+      font-size: 1.4rem
+    }
+
+  }
+
+}

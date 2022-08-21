@@ -15,6 +15,9 @@ export default function Categories({
 }){
   const [t] = useTranslation('global')
   const [genres,setGenres] = useState({[`${t('lang.all')}`]: {id: '00', current: true}}); 
+  const isTouchDevice = () => {
+    return window.matchMedia('(pointer: coarse)').matches
+  }
   const [paramsToSend, setParamsToSend] = useState();
   const navigate = useNavigate();
   const didMount = useRef(true)
@@ -183,7 +186,7 @@ export default function Categories({
       gnres = [`${t('lang.allGen')}`]
     }
     navigate(
-      `/${t('lang.categoriesPath')}/${t('lang.genres')}=${gnres.join('-')}`
+     `/${t('lang.categoriesPath')}/${t('lang.genres')}=${gnres.join('-')}`
       ,{
       state: {
 	params: getParams('PageCategories'),
@@ -257,6 +260,7 @@ export default function Categories({
 	      }
 	      paramsToSend={paramsToSend}
 	      infiniteScroll={props.infiniteScroll ? true : false}
+	      navigateToCategories={navigateToCategories}
 	    />
 	  )
 	}

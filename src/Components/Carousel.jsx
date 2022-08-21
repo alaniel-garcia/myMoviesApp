@@ -1,12 +1,15 @@
 import './Carousel.scss';
 import arrow from '../Assets/icons/arrow.svg';
+import {isTouchDevice} from '../Pages/pagesSharedFunctionalities';
 import Card from './Card';
 import Button from './Miscellaneous/Button';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import colors from '../index.scss';
 import Skeleton from '@mui/material/Skeleton';
-import {v4 as keyGenerator } from 'uuid';
+import Pagination from '@mui/material/Pagination';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { v4 as keyGenerator } from 'uuid';
 import { useTranslation } from 'react-i18next';
 
 
@@ -72,16 +75,47 @@ export default function Carousel({
   const refContentOnRight = useRef();
   const background= props.movie ? colors.white : colors.mainBg;
   let page = 1;
-  let maxPage;
-  const [maxPageForCategories, setMaxPageForCategories] = useState();
+  const [maxPage, setMaxPage] = useState();
   const didMount = useRef(true);
+  const [changePaginationPage,setChangePaginationPage] = useState(parseInt(1));
+
+  let theme = createTheme({
+    palette: {
+      primary:{
+	main: `${colors.secondaryRed}`,
+      } 
+    },
+    components: {
+      MuiPagination: {
+	styleOverrides: {
+	  ul: {
+	    justifyContent: 'center',
+	    marginBlockStart: '1.6rem'
+
+	  }
+	}
+      },
+      MuiPaginationItem: {
+	styleOverrides: {
+	  root:{
+	    color: colors.white,
+	    fontSize: '1.4rem'
+	  },
+	  icon: {
+	    width: '2rem',
+	    height: '2rem'
+	  }
+	}
+      }
+    }
+  })
 
 
   let infiniteScroll = () =>{
     const endOfPage = window.innerHeight + window.pageYOffset >= (document.body.offsetHeight - window.innerHeight);
 
     //removes scroll event when maxPage is reached
-    if(page >= maxPageForCategories || page >= maxPage){
+    if(page >= maxPage){
       window.removeEventListener('scroll', infiniteScroll)
       return
     }
@@ -116,11 +150,13 @@ export default function Carousel({
     setMovies(data.results)
 
 
-    if(props.infiniteScroll && !section){
-      setMaxPageForCategories(data.total_pages)
-    }
-    else if(props.infiniteScroll && !maxPage){
-     maxPage = data.total_pages
+    if(props.infiniteScroll){
+      if(data.total_pages > 500){
+	setMaxPage(500)
+      }
+      else {
+	setMaxPage(data.total_pages)
+      }
     }
 
     if(status !== 200){
@@ -130,9 +166,35 @@ export default function Carousel({
   }
 
 
-  async function getPaginatedMovies(){
+  async function getPaginatedMovies(loadPage = 1){
+    console.log('se usó getPaginatedMovies')
     try{
-        if((page < maxPage) || (page < maxPageForCategories)){
+       //get movies by page selected
+        if(!isTouchDevice() && props.infiniteScroll){
+
+	  setChangePaginationPage(parseInt(loadPage))
+	  props.params['language'] = `${t('lang.langAPI')}`;
+	  props.params['page'] = loadPage;
+	  const {data, status} = await API(`${endpoint}`,{
+	    params: props.params 
+	  })
+
+	  setMovies(data.results)
+
+	  if(data.total_pages > 500){
+	    setMaxPage(500)
+	  }
+	  else {
+	    setMaxPage(data.total_pages)
+	  }
+
+	  if(status !== 200){
+	    console.log(`Algo ocurrió.\nEstado: ${status}, ${data.message}`)
+	  }
+
+	}
+        //get movies by page, but it adds them to te previous ones to get infinite scroll
+        else if(page < maxPage && isTouchDevice){
 
 	  page++;
 	  /*
@@ -171,6 +233,10 @@ export default function Carousel({
 
 
   useEffect(() => {
+    if(!isTouchDevice() && !section && props.infiniteScroll && !props.params){
+      console.log('params',props.params)
+      return
+    }
      getMovies();
   },[])
 
@@ -197,38 +263,50 @@ export default function Carousel({
       didMount.current = false
     }
     else{
-      if(!section && props.paramsToSend.length > 0 && props.params){
-	page = 1
-	getMovies()
-      }
-      else if(!section && movies?.length > 0 ){
-	page = 1
-	getMovies()
-      }
+	if(!section && props.paramsToSend.length > 0 && props.params){
+	  page = 1
+	  if(isTouchDevice() || !props.infiniteScroll){
+	    getMovies()
+	  }
+	  else if(!isTouchDevice() && props.infiniteScroll){
+	    getPaginatedMovies(page)
+	  }
+	}
+	else if(!section && movies?.length > 0 ){
+	  page = 1
+	  if(isTouchDevice() || !props.infiniteScroll){
+	    getMovies()
+	  }
+	  else if(!isTouchDevice() && props.infiniteScroll){
+	    getPaginatedMovies(page)
+	  }
+	}
     }
   },[props.paramsToSend]);
 
   //loads a new page of movies when infiniteScroll is required 
   useEffect(() => {
 
-    if( props.infiniteScroll && section){
-      window.addEventListener('scroll', infiniteScroll)
-    }
-
-    if(didMount.current){
-      didMount.current = false
-    }
-    else{
-      if(props.infiniteScroll && props.params && !section){
+    if(isTouchDevice()){
+      if( props.infiniteScroll && section){
 	window.addEventListener('scroll', infiniteScroll)
+      }
+
+      if(didMount.current){
+	didMount.current = false
+      }
+      else{
+	if(props.infiniteScroll && props.params && !section){
+	  window.addEventListener('scroll', infiniteScroll)
+	}
+      }
+
+      return () => {
+	window.removeEventListener('scroll', infiniteScroll)
       }
     }
 
-    return () => {
-      window.removeEventListener('scroll', infiniteScroll)
-    }
-
-  },[props.params]);
+  },[props.params,maxPage]);
 
 
 
@@ -247,7 +325,7 @@ export default function Carousel({
 
     }
 
-    if(refCardsContainer.current?.scrollLeft !== (refCardsContainer.current.scrollWidth - refCardsContainer.current.clientWidth)){
+    if(refCardsContainer.current?.scrollLeft < (refCardsContainer.current.scrollWidth - refCardsContainer.current.clientWidth - 10)){
       refContentOnRight.current.style.display = 'initial';
     }
     else{
@@ -261,7 +339,9 @@ export default function Carousel({
 	<h1 className='Carousel-title'>{section}</h1>
 	<Link 
 	  className={props.notShowButton || props.displayGrid ? 'inactive' : 'Link'}
-	  to={`${section}`}
+	  to={
+	     `${section}`
+	  }
 	>
 	  <div 
 	    className={ 
@@ -326,6 +406,30 @@ export default function Carousel({
 	    )
 	  }
 	</div>
+        {
+	  props.infiniteScroll && !isTouchDevice() && maxPage && (
+	    <div className='pagination-wrapper'>
+	      <ThemeProvider theme={theme}>
+		<Pagination 
+	          count={maxPage}  
+	          color={'primary'} 
+	          size={'large'} 
+		  siblingCount={4}
+	          page={changePaginationPage}
+	          onChange={
+		    (event) => {
+		      const newPage = event.target.innerText;
+		      getPaginatedMovies(newPage)
+		      window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		      })
+		    }
+		  }/>
+	      </ThemeProvider>
+	    </div>
+	  )
+	}
       </div>
     </article>
   )

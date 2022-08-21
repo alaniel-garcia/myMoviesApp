@@ -41,3 +41,13 @@ $padding-rounded: .6rem;
     height: math.div((3rem - $padding-rounded),5);
   }
 }
+
+
+
+//Media queries
+
+@media (min-width: idx.$bp-large){
+  .HamburguerMenu {
+    display: none;
+  }
+}

@@ -1,3 +1,5 @@
+@use '../index.scss' as idx;
+
 .Genres__header {
   display: flex;
     justify-content: space-between;
@@ -12,9 +14,10 @@
     column-gap: 1.4rem;
 
   margin-block-start: 2.4rem;
-  height: 4rem;
+    height: 4rem;
 
   overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .Genres__movies-container {
@@ -23,3 +26,26 @@
   }
 }
 
+
+
+
+@media (pointer: fine) {
+
+  //style for genres scrollbar
+  .Genres__container::-webkit-scrollbar {
+    height: .8rem;
+    width: 1.2rem;
+  }
+
+  .Genres__container::-webkit-scrollbar-thumb {
+    padding: 1.2rem;
+  }
+
+  //style for genres container on desktop
+  .Genres__container {
+
+    height: 4.5rem;
+      margin-block-end: 1.2rem;
+  }
+
+}

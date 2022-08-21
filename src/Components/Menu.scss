@@ -3,7 +3,7 @@
 .Menu {
   position: fixed;
     z-index: 1200;
-  width: 80vw;
+  width: 28.8rem;
   height: 100vh;
 
   top: 0;
@@ -24,6 +24,10 @@
     box-shadow: .6rem .6rem 1.6rem black;
   }
 
+.Menu__app-title {
+  width: max-content;
+}
+
 .Menu__ul {
   margin-block-start: 2.4rem;
   width: max-content;
@@ -43,4 +47,48 @@
 .Menu__link {
   text-decoration: none;
   color: idx.$just-white;
+}
+
+
+//Media queries
+@media (min-width: idx.$bp-large){
+
+  .Menu {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+      
+    position: initial;
+
+    background: none;
+    box-shadow: none;
+
+    .Menu__ul {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      margin-inline-end: 16.4rem;
+      
+      .Menu__li {
+	padding-inline: 1.6rem;
+      margin: 0;
+      }
+    }
+  }
+
+  .Menu__language {
+    margin: 0;
+    margin-block-start: .5rem;
+    min-width: 8.5rem;
+    position: absolute;
+    display: grid;
+    place-content: center;
+  }
+
+  .Menu_appLogo {
+    display: none;
+  }
 }

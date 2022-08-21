@@ -27,10 +27,14 @@ export default function Root(){
     <BrowserRouter>
       <Routes>
 	<Route path='/' element={<App />} />
-	<Route path={`/${t('lang.trending')}`} element={
+	<Route path={
+	 `/${t('lang.trending')}` 
+	} element={
 	  <PageTrending />
 	}/>
-	<Route path={`/${t('lang.discover')}`} element={
+	<Route path={
+	  `/${t('lang.discover')}` 
+	} element={
 	  <PageDiscover />
 	}/>
 	<Route 
@@ -39,7 +43,9 @@ export default function Root(){
 	    <Movie API={API}/>
 	  }/>
 	<Route 
-	  path={`/${t('lang.movie')}/:id/${t('lang.similar')}`}
+	  path={
+	    `/${t('lang.movie')}/:id/${t('lang.similar')}` 
+	  }
 	  element={
 	    <PageSimilar/>
 	  }/>
@@ -48,19 +54,28 @@ export default function Root(){
 	  element={
 	    <PageSearch/>
 	  }/>
-	<Route path={`/${t('lang.searchPath')}/:search`}
+	<Route path={
+	  `/${t('lang.searchPath')}/:search`
+	}
 	  element={
 	    <div style={{paddingInline: '2.4rem'}}>
 	      <Nav />
 	      <Search/>
 	    </div>
 	  }/>
-	<Route exact path={`/${t('lang.categoriesPath')}`}
+	<Route exact path={
+	 `/${t('lang.categoriesPath')}`
+	}
 	  element={
 	    <Navigate 
-	      to={`/${t('lang.categoriesPath')}/:gnres`} />
+	      to={
+		`/${t('lang.categoriesPath')}/:gnres` 
+	      } 
+	    />
 	  }/>
-	<Route exact path={`/${t('lang.categoriesPath')}/:gnres`}
+	<Route exact path={
+	  `/${t('lang.categoriesPath')}/:gnres`
+	  }
 	  element={
 	    <PageCategories />
 	  }

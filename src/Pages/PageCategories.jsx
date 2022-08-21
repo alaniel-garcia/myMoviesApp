@@ -1,5 +1,5 @@
 import './PageCategories.scss';
-import {goTop} from './pagesSharedFunctionalities';
+import {goTop, isTouchDevice} from './pagesSharedFunctionalities';
 import {API,API_EP_GENRES} from '../Api/API';
 import {useLocation} from 'react-router-dom';
 import Categories from '../Components/Categories';
@@ -11,6 +11,7 @@ export default function PageCategories(){
   const location = useLocation();
   const params = location.state ? location.state.params : '';
   const [t] = useTranslation('global')
+
 
   return  <div className='Page-padded'>
             <Nav />
@@ -24,11 +25,13 @@ export default function PageCategories(){
 		    infiniteScroll={true}
 		  />
 	    </div>
-	    <ArrowButton 
-	      onClick={() => {
-		goTop()
-	      }} 
-	      functionality={'go-top'}/>
+            {
+	      isTouchDevice() && (
+		<ArrowButton 
+		  onClick={goTop} 
+		  functionality={'go-top'}/>
+	      )
+	    }
 	  </div>
 }
 
