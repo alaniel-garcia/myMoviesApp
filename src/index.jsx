@@ -11,9 +11,15 @@ import globalEs from './Translations/es/global.json';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const myStorage = window.localStorage;
+const navLanguage = navigator.language.slice(0,2);
 
 if(!myStorage.getItem('language')){
-  myStorage.setItem('language', `${navigator.language.slice(0,2)}`)
+  if(navLanguage === 'es' || navLanguage === 'en'){
+    myStorage.setItem('language', `${navLanguage}`)
+  }
+  else{
+    myStorage.setItem('language', `en`)
+  }
 }
 
 

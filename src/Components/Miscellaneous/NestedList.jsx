@@ -14,7 +14,12 @@ window.addEventListener('storage', handleLStorageChange);
 
 
 function handleLStorageChange(newLang){
-  myStorage.setItem('language', newLang)
+  if(typeof(newLang) === 'object'){
+    myStorage.setItem('language', `${newLang.oldValue}`)
+  }
+  else{
+    myStorage.setItem('language', `${newLang}`)
+  }
 }
 
 export default function TestList () {
