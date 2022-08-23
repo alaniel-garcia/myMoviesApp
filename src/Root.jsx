@@ -17,6 +17,7 @@ import PageTrending from './Pages/PageTrending';
 import PageDiscover from './Pages/PageDiscover';
 import PageSimilar from './Pages/PageSimilar';
 import PageSearch from './Pages/PageSearch';
+import PageNotFound from './Pages/PageNotFound';
 import { useTranslation } from 'react-i18next';
 
 export default function Root(){
@@ -80,6 +81,10 @@ export default function Root(){
 	    <PageCategories />
 	  }
 	/>
+        <Route path='*' 
+         element={
+	   <PageNotFound />
+	 }/>
       </Routes>
     </BrowserRouter>
   )
