@@ -37,14 +37,6 @@ function App() {
           endpoint={API_EP_GENRES}
           section={`${t('lang.categories')}`}
         />
-    {/*<Carousel
-          API ={API}
-          endpoint={API_EP_DISCOVER}
-          extraParams={'&page=1'}
-          width={'poster'} 
-          section='General' 
-          language={lang}
-        />*/}
       </main>
     </div>
   );

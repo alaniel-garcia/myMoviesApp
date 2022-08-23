@@ -135,7 +135,6 @@ export default function Carousel({
   */
   async function getMovies(){
 
-    console.log('se usó get movies')
 
     if(props.params){
       props.params['language'] = `${t('lang.langAPI')}`;
@@ -167,7 +166,6 @@ export default function Carousel({
 
 
   async function getPaginatedMovies(loadPage = 1){
-    console.log('se usó getPaginatedMovies')
     try{
        //get movies by page selected
         if(!isTouchDevice() && props.infiniteScroll){
@@ -197,16 +195,6 @@ export default function Carousel({
         else if(page < maxPage && isTouchDevice){
 
 	  page++;
-	  /*
-	  console.log('page', page)
-	  if(props.infiniteScroll && !section){
-	    console.log('MAXpage', maxPageForCategories)
-	  }
-	  else{
-	    console.log('MAXpage', maxPage)
-	  }
-	  console.log('paramsitos', props.params)
-	  */
 	  props.params['language'] = `${t('lang.langAPI')}`;
 	  props.params['page'] = page;
 	  const {data, status} = await API(`${endpoint}`,{
