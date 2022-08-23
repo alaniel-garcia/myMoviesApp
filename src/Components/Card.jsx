@@ -32,15 +32,18 @@ export default function Card({
 
   useEffect(() => {
 
-    const observer = new IntersectionObserver(entries => {
-      entries.map(card => {
-	if(card.isIntersecting){
-	  card.target.setAttribute('src', `${API_URL_IMG_LARGE}${src}`)
-	}
-      })
-    },{threshold: [0,1]})
-    if(refMovieCardImg.current){
-      observer.observe(refMovieCardImg.current)
+
+    if(props.lazyLoading){
+      const observer = new IntersectionObserver(entries => {
+	entries.map(card => {
+	  if(card.isIntersecting){
+	    card.target.setAttribute('src', `${API_URL_IMG_LARGE}${src}`)
+	  }
+	})
+      },{threshold: [0,1]})
+      if(refMovieCardImg.current){
+	observer.observe(refMovieCardImg.current)
+      }
     }
 
   },[]);
@@ -53,6 +56,7 @@ export default function Card({
 	  <img 
 	    ref={refMovieCardImg}
 	    className='card__movie-img--large'
+	    src={props.lazyLoading ? null : `${API_URL_IMG_LARGE}${src}`}
 	    alt={title} 
 	  />
 	  :

@@ -392,6 +392,7 @@ export default function Carousel({
 		       src={width === 'poster' ? movie.poster_path : movie.backdrop_path }
 		       title={movie.title}
 		       release={movie.release_date}
+	               lazyLoading={props.infiniteScroll ? false : true}
 		     />
 	    })
 	  }
