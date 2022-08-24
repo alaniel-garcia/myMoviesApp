@@ -75,8 +75,6 @@ export default function TestList () {
       <Collapse in={open} >
         <List>
           <ListItemButton disableGutters sx={styles.listItemCollapsedButton}>
-            <ListItemIcon>
-            </ListItemIcon>
             <ListItemText 
               disableTypography
               onClick={() => {
@@ -87,8 +85,6 @@ export default function TestList () {
               primary='en'/>
           </ListItemButton>
           <ListItemButton disableGutters sx={styles.listItemCollapsedButton}>
-            <ListItemIcon>
-            </ListItemIcon>
             <ListItemText
               disableTypography
               onClick={() => { 

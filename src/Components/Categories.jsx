@@ -186,7 +186,7 @@ export default function Categories({
       gnres = [`${t('lang.allGen')}`]
     }
     navigate(
-     `/${t('lang.categoriesPath')}/${t('lang.genres')}=${gnres.join('-')}`
+     `/myMoviesApp/${t('lang.categoriesPath')}/${t('lang.genres')}=${gnres.join('-')}`
       ,{
       state: {
 	params: getParams('PageCategories'),

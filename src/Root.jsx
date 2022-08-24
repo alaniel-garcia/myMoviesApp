@@ -27,36 +27,39 @@ export default function Root(){
   return(
     <BrowserRouter>
       <Routes>
-	<Route path='/' element={<App />} />
+        <Route path='/' element={
+	  <Navigate to={'/myMoviesApp'} />
+	}/>
+	<Route path='/myMoviesApp' element={<App />} />
 	<Route path={
-	 `/${t('lang.trending')}` 
+	 `/myMoviesApp/${t('lang.trending')}` 
 	} element={
 	  <PageTrending />
 	}/>
 	<Route path={
-	  `/${t('lang.discover')}` 
+	  `/myMoviesApp/${t('lang.discover')}` 
 	} element={
 	  <PageDiscover />
 	}/>
 	<Route 
-	  path={`/${t('lang.movie')}/:id-:title`}
+	  path={`/myMoviesApp/${t('lang.movie')}/:id-:title`}
 	  element={
 	    <Movie API={API}/>
 	  }/>
 	<Route 
 	  path={
-	    `/${t('lang.movie')}/:id/${t('lang.similar')}` 
+	    `/myMoviesApp/${t('lang.movie')}/:id/${t('lang.similar')}` 
 	  }
 	  element={
 	    <PageSimilar/>
 	  }/>
 	<Route 
-	  path={`/${t('lang.searchPath')}`}
+	  path={`/myMoviesApp/${t('lang.searchPath')}`}
 	  element={
 	    <PageSearch/>
 	  }/>
 	<Route path={
-	  `/${t('lang.searchPath')}/:search`
+	  `/myMoviesApp/${t('lang.searchPath')}/:search`
 	}
 	  element={
 	    <div style={{paddingInline: '2.4rem'}}>
@@ -65,17 +68,17 @@ export default function Root(){
 	    </div>
 	  }/>
 	<Route exact path={
-	 `/${t('lang.categoriesPath')}`
+	 `/myMoviesApp/${t('lang.categoriesPath')}`
 	}
 	  element={
 	    <Navigate 
 	      to={
-		`/${t('lang.categoriesPath')}/:gnres` 
+		`/myMoviesApp/${t('lang.categoriesPath')}/:gnres` 
 	      } 
 	    />
 	  }/>
 	<Route exact path={
-	  `/${t('lang.categoriesPath')}/:gnres`
+	  `/myMoviesApp/${t('lang.categoriesPath')}/:gnres`
 	  }
 	  element={
 	    <PageCategories />

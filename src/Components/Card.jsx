@@ -81,7 +81,7 @@ export default function Card({
         <div className='details__button'>
           <Link 
             className='Link' 
-            to={`/${t('lang.movie')}/${id}-${title}`}>
+            to={`/myMoviesApp/${t('lang.movie')}/${id}-${title}`}>
 	    <Button 
 	      text={ `${t('lang.details')}`}
 	      icon={true}

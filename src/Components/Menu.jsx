@@ -68,28 +68,28 @@ export default function Menu({
         <li className='Menu__li'>
           <Link 
             className='Menu__link' 
-            to={`/${t('lang.searchPath')}`}>  
+            to={`/myMoviesApp/${t('lang.searchPath')}`}>  
 	      {`${t('lang.search')}`}
           </Link>
         </li>
         <li className='Menu__li'>
           <Link 
             className='Menu__link' 
-            to={`/${t('lang.trending')}`}>  
+            to={`/myMoviesApp/${t('lang.trending')}`}>  
 	      {`${t('lang.trending')}`}
           </Link>
         </li>
         <li className='Menu__li'>
           <Link 
             className='Menu__link' 
-            to={`/${t('lang.discover')}`}>  
+            to={`/myMoviesApp/${t('lang.discover')}`}>  
 	      {`${t('lang.discover')}`}
           </Link>
         </li>
         <li className='Menu__li'>
           <Link 
             className='Menu__link' 
-            to={`/${t('lang.categoriesPath')}`}>  
+            to={`/myMoviesApp/${t('lang.categoriesPath')}`}>  
 	      {`${t('lang.categories')}`}
           </Link>
         </li>

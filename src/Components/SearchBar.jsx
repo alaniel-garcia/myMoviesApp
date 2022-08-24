@@ -12,7 +12,7 @@ export default function SearchBar(){
   function searchEventHandler(){
     const search = refTextInput.current.value;
     if(search){
-      navigate(`/${t('lang.searchPath')}/${search}`);
+      navigate(`/myMoviesApp/${t('lang.searchPath')}/${search}`);
     }
     else{
       return null
